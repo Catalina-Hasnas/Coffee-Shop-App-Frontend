@@ -1,11 +1,12 @@
 import React from 'react';
 import Home from './containers/Home/Home';
-import { Fragment } from 'react';
+import ProductList from './components/ProductList/ProductList';
 
 const App = (): JSX.Element => {
   return (
     <React.Fragment>
       <Home />
+      <ProductList />
     </React.Fragment>
   );
 }

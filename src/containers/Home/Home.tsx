@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import IProduct from '../../types/IProduct';
-//import api from '../../services/api';
+import { IProductsState } from '../../store/reducers/productsReducer';
 import axios from 'axios';
+import { fetchProducts } from '../../store/actions/index';
+import { IRootState } from '../../index';
+
+const url = "https://amdaris-ecommerce-default-rtdb.firebaseio.com/";
+
+
 
 const Home = (): JSX.Element => {
 
-    const [products, setProducts] = useState<IProduct []>([]);
+    const dispatch = useDispatch();
 
-    function fetchProducts() {
+    const onFetchProducts = () => {
         axios({
             method: 'get',
             url: 'https://amdaris-ecommerce-default-rtdb.firebaseio.com/products.json',
@@ -22,16 +29,22 @@ const Home = (): JSX.Element => {
                     });
                 }
                 console.log(products);
-                setProducts(products);
+                dispatch(fetchProducts(products));
             } )
             .catch( error => {
-                console.log(error);
+                console.log(error)
             } );
     }
 
-    useEffect( () => {
-        fetchProducts()
-    }, []);
+    const products = useSelector<IRootState, IProduct[]>(state => state.products.products);
+
+    const numbersArr = [1,2,3,4];
+      
+
+    useEffect(() => {
+        onFetchProducts();
+        console.log(products);
+        }, []);
 
     return (
         <div>
@@ -42,6 +55,12 @@ const Home = (): JSX.Element => {
                     <span>{product.priceFormatted}</span>
                 </li>
             ))}
+
+            
+            {numbersArr.map(product => (
+                <span>{product}</span>
+            ))
+            }
         </div>
     )
     
