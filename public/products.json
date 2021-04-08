@@ -1,0 +1,20 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "image": "https://via.placeholder.com/320x280",
+            "price": 200,
+            "priceFormatted": 200,
+            "title": "First Product",
+            "amount": 5
+        },
+        {
+            "id": 2,
+            "image": "https://via.placeholder.com/320x280",
+            "price": 230,
+            "priceFormatted": 200,
+            "title": "First Product",
+            "amount": 6
+        }
+    ]
+}
