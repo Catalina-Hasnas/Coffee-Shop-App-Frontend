@@ -6,8 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider }  from 'react-redux';
 import thunk from 'redux-thunk';
-import { combineReducers } from 'redux';
+//import { combineReducers } from 'redux';
 import { IProductsState, productsReducer } from './store/reducers/productsReducer';
+import {Reducers } from './store/reducers';
 
 export interface IRootState {
   products: IProductsState
@@ -15,10 +16,7 @@ export interface IRootState {
 
 // const store = createStore(Reducers, applyMiddleware(thunk));
 
-const store = createStore<IRootState, any, any, any>(
-  combineReducers({
-      products: productsReducer
-}));
+const store = createStore<IRootState, any, any, any>(Reducers);
 
 
 

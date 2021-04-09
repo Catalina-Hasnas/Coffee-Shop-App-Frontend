@@ -1,13 +1,23 @@
-import React from 'react';
-import { IProductsState } from '../../store/reducers/productsReducer';
+import React, {Fragment} from 'react';
+import IProduct from '../../types/IProduct';
 import { useSelector, useDispatch } from "react-redux";
 
-const ProductList = (): JSX.Element => {
+interface IProductListProps {
+    products: IProduct [];
+}
+
+const ProductList = (props:IProductListProps): JSX.Element => {
 
     return (
-        <div>
-            some
-        </div>
+        <Fragment>
+            {props.products.map(product => (
+                <li key={product.id}>
+                    <img src={product.image} alt={product.title} />
+                    <strong>{product.title}</strong>
+                    <span>{product.priceFormatted}</span>
+                </li>
+            ))}
+        </Fragment>
     )
 }
 

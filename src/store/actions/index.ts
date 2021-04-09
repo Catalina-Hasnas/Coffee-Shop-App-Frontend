@@ -1,23 +1,27 @@
 import IProduct from '../../types/IProduct';
 import { ActionTypes } from './actionTypes';
 import axios from 'axios';
-import { Dispatch } from 'redux';
+import { applyMiddleware, Dispatch } from 'redux';
 
-export type Action = { type: ActionTypes; payload: any };
+export type Action = { type: ActionTypes; payload?: any };
 
-const url = "https://amdaris-ecommerce-default-rtdb.firebaseio.com/";
+
+const url = "https://amdaris-ecommerce-default-rtdb.firebaseio.com/products.json";
 
 export const fetchProducts = (products: IProduct []): Action => ({
     type: ActionTypes.fetchProducts,
     payload: products
 })
 
-
+export const fetchProductsFail = (error: any): Action => ({
+    type: ActionTypes.fetchProductsFail,
+    payload: error
+})
 
 // export const fetchProducts = () => {
-//     return async (dispatch: Dispatch) => {
+//     return (dispatch: Dispatch) => {
         
-//         await axios.get(url)
+//         axios.get(url)
 //         .then(res => {
 //             var products: IProduct [] = [];
 //             for (let key in res.data) {

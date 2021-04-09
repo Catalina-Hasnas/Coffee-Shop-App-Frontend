@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import IProduct from '../../types/IProduct';
-import { IProductsState } from '../../store/reducers/productsReducer';
 import axios from 'axios';
 import { fetchProducts } from '../../store/actions/index';
+import { fetchProductsFail } from '../../store/actions/index';
 import { IRootState } from '../../index';
-
-const url = "https://amdaris-ecommerce-default-rtdb.firebaseio.com/";
-
-
+import Header from '../../components/Header/Header';
+import ProductsList from '../../components/ProductList/ProductList';
+import Loading from '../../components/UI/Loading';
 
 const Home = (): JSX.Element => {
 
     const dispatch = useDispatch();
+    const products = useSelector<IRootState, IProduct[]>(state => state.products.products);  
+    const loading = useSelector<IRootState, boolean>(state => state.products.loading);  
 
     const onFetchProducts = () => {
+
         axios({
             method: 'get',
             url: 'https://amdaris-ecommerce-default-rtdb.firebaseio.com/products.json',
@@ -33,34 +35,22 @@ const Home = (): JSX.Element => {
             } )
             .catch( error => {
                 console.log(error)
+                dispatch(fetchProductsFail(error))
             } );
     }
-
-    const products = useSelector<IRootState, IProduct[]>(state => state.products.products);
-
-    const numbersArr = [1,2,3,4];
-      
 
     useEffect(() => {
         onFetchProducts();
         console.log(products);
-        }, []);
+    }, []);
+
+    let productList = loading ? <Loading/> : <ProductsList products = {products}/>
 
     return (
-        <div>
-            {products.map(product => (
-                <li key={product.id}>
-                    <img src={product.image} alt={product.title} />
-                    <strong>{product.title}</strong>
-                    <span>{product.priceFormatted}</span>
-                </li>
-            ))}
 
-            
-            {numbersArr.map(product => (
-                <span>{product}</span>
-            ))
-            }
+        <div>
+            <Header/>
+            {productList}
         </div>
     )
     
