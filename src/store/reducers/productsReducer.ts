@@ -1,9 +1,6 @@
 import IProduct from '../../types/IProduct';
-//import { fetchProducts } from '../actions';
 import { ActionTypes }  from '../actions/actionTypes';
-
 import { Action } from '../actions/index';
-
 export interface IProductsState {
     products: IProduct[],
     error: any,
