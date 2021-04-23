@@ -1,15 +1,14 @@
 import React, { Fragment } from 'react';
 
-const Header = (): JSX.Element => {
+const navigation = ['Coffee', 'Tea', 'Milk', 'Sweeteners', 'Coffee Machines'];
+const profile = ['Your Profile', 'Your orders', 'Sign out'];
 
-    return (
-        <Fragment>
-            <header>
-                <img src="https://via.placeholder.com/150x150" alt="logo"></img>
-                <h2>Welcome to our shop!</h2>
-            </header>
-        </Fragment>
-    )
-}
+const Header = (): JSX.Element => (
+    <Fragment>
+        <header className="h-large">
+            <div className="h-full bg-header bg-cover bg-center backdrop-blur-xl"/>
+        </header>
+    </Fragment>
+);
 
 export default Header;
