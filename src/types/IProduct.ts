@@ -1,8 +1,11 @@
 export default interface IProduct {
-    image: string;
-    id: number;
-    title: string;
-    priceFormatted: string;
-    price: number;
-    amount: number;
+    id: number,
+    amount: number,
+    image: string,
+    price: number,
+    priceFormatted: string,
+    title: string,
+    description: string,
+    createdAt: Date,
+    createdAtFormatted: string
 }
