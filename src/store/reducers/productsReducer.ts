@@ -4,13 +4,25 @@ import { Action } from '../actions/index';
 export interface IProductsState {
     products: IProduct[],
     error: any,
-    loading: boolean
+    loading: boolean,
+    product: IProduct
 }
 
 const initialState = {
     products: [],
     error: null,
-    loading: true
+    loading: true,
+    product: {
+        id: 1,
+        amount: 1,
+        image: "",
+        price: 1,
+        priceFormatted: "",
+        title: "",
+        description: "",
+        createdAt: new Date(),
+        createdAtFormatted: ""
+    }
 }
 
 export const productsReducer = (state: IProductsState = initialState, action: Action) : IProductsState => {
@@ -22,6 +34,9 @@ export const productsReducer = (state: IProductsState = initialState, action: Ac
         }
         case ActionTypes.fetchProductsFail: {
             return {...state, error: action.payload}
+        }
+        case ActionTypes.fetchProduct: {
+            return {... state, product: action.payload, loading: false}
         }
         default: 
             return state

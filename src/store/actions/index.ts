@@ -17,17 +17,22 @@ const fetchProductsFail = (error: any): Action => ({
     payload: error
 })
 
+const fetchProduct = (product: IProduct): Action => ({
+    type: ActionTypes.fetchProduct,
+    payload: product
+})
+
 export const getAllProducts: ActionCreator<
   ThunkAction<Promise<any>, IProductsState, null, Action>
 > = () => {
   return async (dispatch: Dispatch) => {
-    axios.get('/products.json')
+    axios.get('/products')
         .then(res => {
             var products: IProduct [] = [];
             for (let key in res.data) {
                 products.push({
                     ...res.data[key],
-                    id: key
+                    id: res.data[key].id
                 });
             }
             console.log(products);
@@ -36,6 +41,20 @@ export const getAllProducts: ActionCreator<
         .catch( error => {
             console.log(error)
             dispatch(fetchProductsFail(error))
+        } );
+    }
+}
+
+export const getProductById: ActionCreator<
+  ThunkAction<Promise<any>, IProductsState, null, Action>
+> = (id: number) => {
+  return async (dispatch: Dispatch) => {
+    axios.get(`/products/${id}`)
+        .then(res => {
+            dispatch(fetchProduct(res.data));
+        } )
+        .catch( error => {
+            console.log(error)
         } );
     }
 }

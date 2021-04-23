@@ -8,6 +8,7 @@ import { Provider }  from 'react-redux';
 import thunk from 'redux-thunk';
 import { IProductsState } from './store/reducers/productsReducer';
 import {Reducers } from './store/reducers';
+import { BrowserRouter } from 'react-router-dom';
 
 export interface IRootState {
   products: IProductsState
@@ -25,7 +26,9 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

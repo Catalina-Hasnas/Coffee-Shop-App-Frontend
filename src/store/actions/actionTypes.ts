@@ -1,4 +1,5 @@
 export enum ActionTypes {
     fetchProducts,
-    fetchProductsFail
+    fetchProductsFail,
+    fetchProduct
 }

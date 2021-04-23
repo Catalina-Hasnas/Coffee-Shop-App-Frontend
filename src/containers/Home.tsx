@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import IProduct from '../../types/IProduct';
-import { getAllProducts } from '../../store/actions/index';
-import { IRootState } from '../../index';
-import Header from '../../components/Header/Header';
-import ProductsList from '../../components/ProductList/ProductList';
-import Loading from '../../components/UI/Loading';
-import { useThunkDispatch } from '../../store/hooks';
+import IProduct from '../types/IProduct';
+import { getAllProducts } from '../store/actions/index';
+import { IRootState } from '../index';
+import Header from '../components/Header/Header';
+import NavBar from '../components/Header/NavBar';
+import ProductsList from '../components/ProductList/ProductList';
+import Loading from '../components/UI/Loading';
+import { useThunkDispatch } from '../store/hooks';
 
 const Home = (): JSX.Element => {
 
@@ -22,7 +23,8 @@ const Home = (): JSX.Element => {
 
     return (
 
-        <div>
+        <div className="bg-bg">
+            <NavBar/>
             <Header/>
             {productList}
         </div>
