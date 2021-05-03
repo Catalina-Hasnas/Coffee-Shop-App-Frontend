@@ -4,11 +4,15 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { ShoppingCartIcon, MenuIcon, XIcon, UserCircleIcon } from '@heroicons/react/solid';
 import Logo from './Logo';
 import ProfileDropdown from './ProfileDropdown';
+import ICategory from '../../types/ICategory';
 
-const navigation = ['Coffee', 'Tea', 'Milk', 'Sweeteners', 'Coffee Machines'];
 const profile = ['Your Profile', 'Your orders', 'Sign out'];
 
-const Header = (): JSX.Element => (
+interface INavBarProps {
+    categories: ICategory [];
+}
+
+const NavBar = (props: INavBarProps): JSX.Element => (
 
     <div>
         <Disclosure as="nav">
@@ -23,19 +27,12 @@ const Header = (): JSX.Element => (
 
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-center space-x-10">
-                                    {navigation.map((item, itemIdx) =>
-                                        itemIdx === 0 ? (
-                                            <Fragment key={item}>
-                                                {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                                                <Link to="/" className="font-semibold tracking-wider text-lg  bg-secondary rounded-sm p-3">
-                                                    {item}
-                                                </Link>
-                                            </Fragment>
-                                        ) : (
-                                            <Link to={`/${item}`} className="font-medium tracking-wider text-lg hover:text-secondary">
-                                                    {item}
+                                    {props.categories.map((item, itemIdx) =>
+                                        <Fragment key={itemIdx}>
+                                            <Link to={`/categories/${item.id}`} className="font-medium tracking-wider text-lg hover:text-secondary">
+                                                {item.name}
                                             </Link>
-                                        )
+                                        </Fragment>
                                     )}
                                 </div>
                             </div>
@@ -69,12 +66,12 @@ const Header = (): JSX.Element => (
 
                     <Disclosure.Panel className="md:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                            {navigation.map((item, itemIdx) =>
-                                <Link to={`/${item}`}
-                                    className="hover:text-secondary block px-3 py-2 text-base font-medium"
-                                    >
-                                    {item}
-                                </Link>
+                            {props.categories.map((item, itemIdx) =>
+                                        <Fragment key={itemIdx}>
+                                            <Link to={`/categories/${item.id}`} className="hover:text-secondary block px-3 py-2 text-base font-medium">
+                                                {item.name}
+                                            </Link>
+                                        </Fragment>
                             )}
                         </div>
 
@@ -108,4 +105,4 @@ const Header = (): JSX.Element => (
     </div>
 )
 
-export default Header;
+export default NavBar;

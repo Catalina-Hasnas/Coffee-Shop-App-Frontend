@@ -6,12 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import { createStore, applyMiddleware, Store } from 'redux';
 import { Provider }  from 'react-redux';
 import thunk from 'redux-thunk';
-import { IProductsState } from './store/reducers/productsReducer';
+import { IProductsState } from './store/reducers/Products/productsReducer';
 import {Reducers } from './store/reducers';
 import { BrowserRouter } from 'react-router-dom';
+import { ICategoriesState } from './store/reducers/Categories/categoriesReducer';
 
 export interface IRootState {
-  products: IProductsState
+  products: IProductsState,
+  categories: ICategoriesState
 }
 
 export default function configureStore(): Store<IRootState, any> {

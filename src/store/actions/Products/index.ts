@@ -1,9 +1,9 @@
-import IProduct from '../../types/IProduct';
-import { IProductsState } from '../reducers/productsReducer';
-import { ActionTypes } from './actionTypes';
+import IProduct from '../../../types/IProduct';
+import { IProductsState } from '../../reducers/Products/productsReducer';
+import { ActionTypes } from '../actionTypes';
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import axios from '../../services/api';
+import axios from '../../../services/api';
 
 export type Action = { type: ActionTypes; payload?: any };
 

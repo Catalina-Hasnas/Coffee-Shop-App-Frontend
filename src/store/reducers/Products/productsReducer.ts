@@ -1,6 +1,6 @@
-import IProduct from '../../types/IProduct';
-import { ActionTypes }  from '../actions/actionTypes';
-import { Action } from '../actions/index';
+import IProduct from '../../../types/IProduct';
+import { ActionTypes }  from '../../actions/actionTypes';
+import { Action } from '../../actions/Products/index';
 export interface IProductsState {
     products: IProduct[],
     error: any,
@@ -13,15 +13,18 @@ const initialState = {
     error: null,
     loading: true,
     product: {
-        id: 1,
-        amount: 1,
+        id: 0,
+        amount: 0,
         image: "",
-        price: 1,
-        priceFormatted: "",
+        price: 0,
         title: "",
         description: "",
         createdAt: new Date(),
-        createdAtFormatted: ""
+        createdAtFormatted: "",
+        category: {
+            Id: 0,
+            Name: ""
+        }
     }
 }
 

@@ -9,40 +9,38 @@ import Loading from '../components/UI/Loading';
 import NavBar from '../components/Header/NavBar';
 import { productsReducer } from '../store/reducers/Products/productsReducer';
 import ICategory from '../types/ICategory';
+import { getCategoryById } from '../store/actions/Categories';
+import ProductsList from '../components/ProductList/ProductList';
 
-const ProductPage = (): JSX.Element => {
+const CategoriesPage = (): JSX.Element => {
 
     const dispatch = useThunkDispatch();
-    const product = useSelector<IRootState, IProduct>(state => state.products.product);  
-    const loading = useSelector<IRootState, boolean>(state => state.products.loading);  
+    const loading = useSelector<IRootState, boolean>(state => state.categories.loading);  
     const categories = useSelector<IRootState, ICategory[]>(state => state.categories.categories);
+    const category =  useSelector<IRootState, ICategory>(state => state.categories.category);
 
     interface ParamTypes {
-        id: string
+        categoryId: string
     }
 
-    let {id} = useParams<ParamTypes>();
+    let {categoryId} = useParams<ParamTypes>();
 
     useEffect(() => {
-        dispatch(getProductById(id));
-    }, []);
+        dispatch(getCategoryById(categoryId));
+    }, [categoryId]);
+
+
+
+    let productList = loading ? <Loading/> : <ProductsList products = {category.products}/>
 
     return (
 
         <div>
             <NavBar categories = {categories}/>
-            {!loading? (
-                <div className="max-w-7xl mx-auto flex flex-col justify-center items-center mt-5 font-sans ">
-                    <img className="w-2/4 h-auto" src={product.image} alt={product.title} />
-                    <p className="my-3 text-lg font-semibold tracking-wide"> {product.title} </p>
-                    <p className="w-2/4 leading-relaxed"> {product.description} </p>
-                </div>
-            ) : <Loading/>}
-            
-            
+            {productList}
         </div>
     )
     
 }
 
-export default ProductPage;
+export default CategoriesPage;
