@@ -6,7 +6,7 @@ interface IProductCardProps {
     id: number,
     title: string,
     image: string,
-    price: string
+    price: number
 }
 
 const ProductCard = (props:IProductCardProps): JSX.Element => {

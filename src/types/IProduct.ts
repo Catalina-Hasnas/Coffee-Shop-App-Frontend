@@ -3,9 +3,12 @@ export default interface IProduct {
     amount: number,
     image: string,
     price: number,
-    priceFormatted: string,
     title: string,
     description: string,
     createdAt: Date,
-    createdAtFormatted: string
+    createdAtFormatted: string,
+    category: {
+        Id: number,
+        Name: string
+    }
 }

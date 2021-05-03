@@ -13,7 +13,6 @@ const ProductList = (props:IProductListProps): JSX.Element => {
             <div className="max-w-7xl mx-auto px-8">
                 <div className="grid justify-items-center gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                     
-
                     {props.products.map((product) => {
                         
                         return (
@@ -21,7 +20,7 @@ const ProductList = (props:IProductListProps): JSX.Element => {
                                 id = {product.id}
                                 title = {product.title}
                                 image = {product.image}
-                                price = {product.priceFormatted}
+                                price = {product.price}
                             />
                         )
                     })}
