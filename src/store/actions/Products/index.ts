@@ -4,8 +4,7 @@ import { ActionTypes } from '../actionTypes';
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import axios from '../../../services/api';
-
-export type Action = { type: ActionTypes; payload?: any };
+import { Action }  from '../Action';
 
 const fetchProducts = (products: IProduct []): Action => ({
     type: ActionTypes.fetchProducts,
@@ -35,7 +34,6 @@ export const getAllProducts: ActionCreator<
                     id: res.data[key].id
                 });
             }
-            console.log(products);
             dispatch(fetchProducts(products));
         } )
         .catch( error => {

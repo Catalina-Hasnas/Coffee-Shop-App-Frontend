@@ -4,8 +4,7 @@ import { ActionTypes } from '../actionTypes';
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import axios from '../../../services/api';
-
-export type Action = { type: ActionTypes; payload?: any };
+import { Action }  from '../Action';
 
 const fetchCategories = (categories: ICategory []): Action => ({
     type: ActionTypes.fetchCategories,
@@ -35,7 +34,6 @@ export const getAllCategories: ActionCreator<
                     id: res.data[key].id
                 });
             }
-            console.log(categories);
             dispatch(fetchCategories(categories));
         } )
         .catch( error => {
@@ -51,8 +49,6 @@ export const getCategoryById: ActionCreator<
   return async (dispatch: Dispatch) => {
     axios.get(`/categories/${id}`)
         .then(res => {
-            console.log("from action")
-            console.log(res.data);
             dispatch(fetchCategory(res.data));
         } )
         .catch( error => {

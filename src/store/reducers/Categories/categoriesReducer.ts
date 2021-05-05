@@ -3,7 +3,7 @@ import ICategory from '../../../types/ICategory';
 
 
 import { ActionTypes }  from '../../actions/actionTypes';
-import { Action } from '../../actions/Categories/index';
+import { Action } from '../../actions/Action';
 
 export interface ICategoriesState {
     categories: ICategory [],
@@ -26,16 +26,12 @@ const initialState = {
 export const categoriesReducer = (state: ICategoriesState = initialState, action: Action) : ICategoriesState => {
     switch(action.type) {
         case ActionTypes.fetchCategories: {
-            console.log("from the reducer:");
-            console.log(action.payload);
             return {...state, categories: action.payload, loading: false}
         }
         case ActionTypes.fetchCategoriesFail: {
             return {...state, error: action.payload}
         }
         case ActionTypes.fetchCategory: {
-            console.log("from the reducer by id");
-            console.log(action.payload);
             return {... state, category: action.payload, loading: false}
         }
         default: 

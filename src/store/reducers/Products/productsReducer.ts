@@ -1,6 +1,6 @@
 import IProduct from '../../../types/IProduct';
 import { ActionTypes }  from '../../actions/actionTypes';
-import { Action } from '../../actions/Products/index';
+import { Action } from '../../actions/Action';
 export interface IProductsState {
     products: IProduct[],
     error: any,
@@ -31,8 +31,6 @@ const initialState = {
 export const productsReducer = (state: IProductsState = initialState, action: Action) : IProductsState => {
     switch(action.type) {
         case ActionTypes.fetchProducts: {
-            console.log("from the reducer:");
-            console.log(action.payload);
             return {...state, products: action.payload, loading: false}
         }
         case ActionTypes.fetchProductsFail: {
