@@ -10,10 +10,12 @@ import { IProductsState } from './store/reducers/Products/productsReducer';
 import {Reducers } from './store/reducers';
 import { BrowserRouter } from 'react-router-dom';
 import { ICategoriesState } from './store/reducers/Categories/categoriesReducer';
+import { ICartState } from './store/reducers/Cart/cartReducer';
 
 export interface IRootState {
   products: IProductsState,
-  categories: ICategoriesState
+  categories: ICategoriesState,
+  cart: ICartState
 }
 
 export default function configureStore(): Store<IRootState, any> {

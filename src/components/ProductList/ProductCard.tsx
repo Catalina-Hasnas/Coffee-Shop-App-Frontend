@@ -1,6 +1,9 @@
 import React, {Fragment} from 'react';
 import IProduct from '../../types/IProduct';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { ActionTypes } from '../../store/actions/actionTypes';
+
 
 interface IProductCardProps {
     id: number,
@@ -10,6 +13,8 @@ interface IProductCardProps {
 }
 
 const ProductCard = (props:IProductCardProps): JSX.Element => {
+    
+const dispatch = useDispatch()
 
     return (
         <Fragment>
@@ -23,6 +28,10 @@ const ProductCard = (props:IProductCardProps): JSX.Element => {
                         <p>{props.title}</p>
                         <p>{props.price}</p>
                     </div>
+                    <button onClick={() => dispatch({ type: ActionTypes.addToCart, payload: {id: props.id, amount: 1, price: props.price} })}
+                            className="p-3 bg-secondary text-primaryLight tracking-wider">
+                        Add to cart            
+                    </button>
                 </div>
             </Link>
         </Fragment>
