@@ -16,7 +16,7 @@ const ProductList = (props:IProductListProps): JSX.Element => {
                     {props.products.map((product) => {
                         
                         return (
-                            <ProductCard
+                            <ProductCard key={product.id}
                                 id = {product.id}
                                 title = {product.title}
                                 image = {product.image}

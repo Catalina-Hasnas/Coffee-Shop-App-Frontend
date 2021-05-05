@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-const navigation = ['Coffee', 'Tea', 'Milk', 'Sweeteners', 'Coffee Machines'];
-const profile = ['Your Profile', 'Your orders', 'Sign out'];
-
 const Header = (): JSX.Element => (
     <Fragment>
         <header className="h-large">

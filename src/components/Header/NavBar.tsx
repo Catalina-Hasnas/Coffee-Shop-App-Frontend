@@ -29,7 +29,7 @@ const NavBar = (props: INavBarProps): JSX.Element => (
                                 <div className="ml-10 flex items-center space-x-10">
                                     {props.categories.map((item, itemIdx) =>
                                         <Fragment key={itemIdx}>
-                                            <Link to={`/categories/${item.id}`} className="font-medium tracking-wider text-lg hover:text-secondary">
+                                            <Link to={`/categories/${item.id}`} className="font-bold tracking-wider text-xl hover:text-secondary">
                                                 {item.name}
                                             </Link>
                                         </Fragment>
