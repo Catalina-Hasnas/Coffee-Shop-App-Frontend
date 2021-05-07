@@ -5,5 +5,6 @@ export enum ActionTypes {
     fetchCategories,
     fetchCategoriesFail,
     fetchCategory,
-    addToCart
+    addToCart,
+    updateCart,
 }

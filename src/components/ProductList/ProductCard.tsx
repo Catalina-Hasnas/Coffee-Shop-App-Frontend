@@ -28,7 +28,16 @@ const dispatch = useDispatch()
                         <p>{props.title}</p>
                         <p>{props.price}</p>
                     </div>
-                    <button onClick={() => dispatch({ type: ActionTypes.addToCart, payload: {id: props.id, amount: 1, price: props.price} })}
+                    <button onClick={() => dispatch({ 
+                                                    type: ActionTypes.addToCart, 
+                                                    payload: {
+                                                            id: props.id, 
+                                                            amount: 1, 
+                                                            unitPrice: props.price,
+                                                            image: props.image,
+                                                            title: props.title,
+                                                            totalPrice: props.price
+                                                            } })}
                             className="p-3 bg-secondary text-primaryLight tracking-wider">
                         Add to cart            
                     </button>

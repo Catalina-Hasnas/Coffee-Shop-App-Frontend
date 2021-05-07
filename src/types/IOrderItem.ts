@@ -1,5 +1,8 @@
 export default interface IOrderItem {
     id: number,
     amount: number,
-    price: number,
+    totalPrice: number,
+    image: string,
+    title: string,
+    unitPrice: number
 }

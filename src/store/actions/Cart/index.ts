@@ -10,3 +10,8 @@ export const addToCart = (orderItem: IOrderItem): Action => ({
     type: ActionTypes.addToCart,
     payload: orderItem
 })
+
+export const updateAmount = (orderItem: IOrderItem): Action => ({
+    type: ActionTypes.updateCart,
+    payload: orderItem
+})
