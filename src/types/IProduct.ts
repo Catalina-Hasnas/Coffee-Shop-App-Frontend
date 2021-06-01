@@ -8,7 +8,7 @@ export default interface IProduct {
     createdAt: Date,
     createdAtFormatted: string,
     category: {
-        Id: number,
-        Name: string
+        id: number,
+        name: string
     }
 }

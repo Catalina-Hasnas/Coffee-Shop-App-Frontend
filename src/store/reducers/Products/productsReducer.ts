@@ -22,8 +22,8 @@ const initialState = {
         createdAt: new Date(),
         createdAtFormatted: "",
         category: {
-            Id: 0,
-            Name: ""
+            id: 0,
+            name: ""
         }
     }
 }
@@ -37,6 +37,8 @@ export const productsReducer = (state: IProductsState = initialState, action: Ac
             return {...state, error: action.payload}
         }
         case ActionTypes.fetchProduct: {
+            console.log("from reducer")
+            console.log(action.payload)
             return {... state, product: action.payload, loading: false}
         }
         default: 
