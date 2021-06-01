@@ -7,21 +7,55 @@ import NavBar from '../components/Header/NavBar';
 import ICategory from '../types/ICategory';
 import IOrderItem from '../types/IOrderItem';
 import OrderItem from '../components/OrderItem/OrderItem';
+import { Link } from 'react-router-dom';
+import axios from '../services/api';
 
 const Cart = (): JSX.Element => {
 
-    //const loading = useSelector<IRootState, boolean>(state => state.categories.loading);  
-    const categories = useSelector<IRootState, ICategory[]>(state => state.categories.categories);
     const orderItems = useSelector<IRootState, IOrderItem[]>(state => state.cart.orderItems);
 
     let initialValue = 0
     const priceSum: number = orderItems.reduce(
         (accumulator, currentValue) => accumulator + currentValue.totalPrice, initialValue
     )
+    interface orderItem {
+        productId: number,
+        unitPrice: number,
+        quantity: number
+    }
+
+    const startOrder = (orderItems: IOrderItem[]) => {
+
+        const orderData: orderItem[] = orderItems.map(item => {
+            const orderItem: orderItem = {
+                productId: item.id,
+                unitPrice: item.unitPrice,
+                quantity: item.amount
+            };
+            return orderItem
+        })
+
+        const data = {
+            "orderItems" : orderData
+        }
+
+        console.log(orderData)
+
+        axios.post( '/Orders', data )
+            .then( response => {
+               console.log(response)
+            } )
+            .catch( error => {
+                console.log(error)
+            } );
+    }
+
+
+    let navBar = orderItems ? <NavBar orderItemsLength = {orderItems.length} /> : <NavBar />
 
     return (
         <div>
-            <NavBar categories = {categories}/>
+            {navBar}
             <div className="max-w-7xl mx-auto mt-10 bg-bg">
                 <div className="flex flex-wrap shadow-md my-10">
 
@@ -50,10 +84,10 @@ const Cart = (): JSX.Element => {
                                         )
                         })}
 
-                        <a href="#" className="flex font-semibold text-indigo-600 text-sm mt-10">
+                        <Link to="/" className="flex font-semibold text-indigo-600 text-sm mt-10">
                             <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" /></svg>
                             Continue Shopping
-                        </a>
+                        </Link>
                     </div>
                     <div id="summary" className="w-1/4 px-8 py-10 text-primary">
                         <h1 className="font-semibold text-2xl border-b pb-8">Order Summary</h1>
@@ -77,7 +111,7 @@ const Cart = (): JSX.Element => {
                                 <span>Total cost</span>
                                 <span>{priceSum}</span>
                             </div>
-                            <button className="bg-secondary font-semibold py-3 text-sm text-primaryLight uppercase w-full">Checkout</button>
+                            <button onClick={() => startOrder(orderItems)} className="bg-secondary font-semibold py-3 text-sm text-primaryLight uppercase w-full">Checkout</button>
                         </div>
                     </div>
                 </div>

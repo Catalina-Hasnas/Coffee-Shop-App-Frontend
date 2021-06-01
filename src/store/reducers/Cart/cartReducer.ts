@@ -25,7 +25,7 @@ export const cartReducer = (state: ICartState = initialState, action: Action) : 
                 var updatedPrice: number = orderItems[existingItemIndex].unitPrice * orderItems[existingItemIndex].amount;
                 orderItems[existingItemIndex].totalPrice = updatedPrice;
             } else {
-                    orderItems = [...state.orderItems, action.payload];
+                orderItems = [...state.orderItems, action.payload];
             }
             
             localStorage.setItem('orderItems', JSON.stringify(orderItems));
@@ -39,7 +39,15 @@ export const cartReducer = (state: ICartState = initialState, action: Action) : 
             orderItems[orderItemIndex].amount = action.payload.amount;
             orderItems[orderItemIndex].totalPrice = orderItems[orderItemIndex].unitPrice * action.payload.amount;
 
-            localStorage.setItem('orderItems', JSON.stringify(orderItems));
+            if (orderItems[orderItemIndex].amount <= 0) {
+                orderItems.splice(orderItemIndex,1);
+            }
+
+            if (orderItems.length === 0) {
+                localStorage.clear();
+            } else {
+                localStorage.setItem('orderItems', JSON.stringify(orderItems));
+            }
             console.log(localStorage);
             console.log({...state, orderItems: orderItems});
             return {...state, orderItems: orderItems}

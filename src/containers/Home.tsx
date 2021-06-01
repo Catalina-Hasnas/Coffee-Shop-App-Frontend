@@ -10,27 +10,30 @@ import Loading from '../components/UI/Loading';
 import { useThunkDispatch } from '../store/hooks';
 import ICategory from '../types/ICategory';
 import { getAllCategories } from '../store/actions/Categories';
+import IOrderItem from '../types/IOrderItem';
 
 const Home = (): JSX.Element => {
 
     const dispatch = useThunkDispatch();
     const products = useSelector<IRootState, IProduct[]>(state => state.products.products);  
     const loading = useSelector<IRootState, boolean>(state => state.products.loading);  
-    const categories = useSelector<IRootState, ICategory[]>(state => state.categories.categories);
-    //const loadingCategories = useSelector<IRootState, boolean>(state => state.categories.loading);  
+    const orderItems = useSelector<IRootState, IOrderItem[]>(state => state.cart.orderItems);
+    
 
     useEffect(() => {
         dispatch(getAllProducts());
         dispatch(getAllCategories());
+        console.log(orderItems.length)
     }, []);
 
     let productList = loading ? null : <ProductsList products = {products}/>
     let header = loading ? <Loading/> : <Header />
+    let navBar = orderItems ? <NavBar orderItemsLength = {orderItems.length} /> : <NavBar />
 
     return (
 
         <div className="bg-bg">
-            <NavBar categories = {categories}/>
+            {navBar}
             {header}
             {productList}
         </div>
