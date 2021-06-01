@@ -9,38 +9,57 @@ interface IProductCardProps {
     id: number,
     title: string,
     image: string,
-    price: number
+    price: number,
+    environment?: string
 }
 
 const ProductCard = (props:IProductCardProps): JSX.Element => {
     
 const dispatch = useDispatch()
 
+const linkTo = props.environment?.includes("/backoffice") ? (
+    <Link to={`/backoffice/update/${props.id}`}>
+        <button className="p-3 bg-secondary text-primaryLight tracking-wider">
+            Update Product           
+        </button>
+    </Link>
+
+) : (
+
+    <Link to="/">
+        <button onClick={() => dispatch({ 
+                                    type: ActionTypes.addToCart, 
+                                    payload: {
+                                            id: props.id, 
+                                            amount: 1, 
+                                            unitPrice: props.price,
+                                            image: props.image,
+                                            title: props.title,
+                                            totalPrice: props.price
+                                            } })}
+                className="p-3 bg-secondary text-primaryLight tracking-wider">
+            Add to cart            
+        </button>
+    </Link>
+)
+
     return (
         <Fragment>
             <Link to={`/${props.id}`}>
                 <div className="bg-bg rounded-sm shadow-md text-center w-60">
+                
                     <div className="w-60 h-full">
                         <img src={props.image} />
                     </div>
+                
 
                     <div className="mt-10">
                         <p>{props.title}</p>
                         <p>{props.price}</p>
                     </div>
-                    <button onClick={() => dispatch({ 
-                                                    type: ActionTypes.addToCart, 
-                                                    payload: {
-                                                            id: props.id, 
-                                                            amount: 1, 
-                                                            unitPrice: props.price,
-                                                            image: props.image,
-                                                            title: props.title,
-                                                            totalPrice: props.price
-                                                            } })}
-                            className="p-3 bg-secondary text-primaryLight tracking-wider">
-                        Add to cart            
-                    </button>
+
+                    {linkTo}
+
                 </div>
             </Link>
         </Fragment>

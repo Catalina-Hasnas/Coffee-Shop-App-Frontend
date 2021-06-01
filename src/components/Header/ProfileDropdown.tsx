@@ -29,16 +29,16 @@ const ProfileDropdown = (): JSX.Element => (
                             static
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-sm shadow-lg py-1"
                         >
-                            {profile.map((item) => (
-                                <Menu.Item key={item}>
-                                    {({ active }) => (
-                                        <Link to={`/${item}`}
+                            
+                                <Menu.Item>
+                                   
+                                        <Link to="/backoffice"
                                             className='bg-primaryLight block px-4 py-2 text-sm text-primary hover:text-secondary'>
-                                            {item}
+                                                Backoffice
                                         </Link>
-                                    )}
+                                    
                                 </Menu.Item>
-                            ))}
+                            
                         </Menu.Items>
                     </Transition>
                 </>

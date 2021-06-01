@@ -3,7 +3,8 @@ import IProduct from '../../types/IProduct';
 import ProductCard from './ProductCard';
 
 interface IProductListProps {
-    products: IProduct [];
+    products: IProduct [],
+    environment?: string
 }
 
 const ProductList = (props:IProductListProps): JSX.Element => {
@@ -22,6 +23,7 @@ const ProductList = (props:IProductListProps): JSX.Element => {
                                 title = {product.title}
                                 image = {product.image}
                                 price = {product.price}
+                                environment = {props.environment}
                             />
                         )
                     })}

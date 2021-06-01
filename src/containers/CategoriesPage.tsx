@@ -36,7 +36,7 @@ const CategoriesPage = (): JSX.Element => {
     return (
 
         <div>
-            <NavBar categories = {categories}/>
+            <NavBar/>
             {productList}
         </div>
     )
