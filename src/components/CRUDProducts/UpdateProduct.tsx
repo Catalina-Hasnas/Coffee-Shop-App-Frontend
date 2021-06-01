@@ -50,7 +50,7 @@ const UpdateProduct = (): JSX.Element => {
                 title = {product.title}
                 amount = {product.amount}
                 price = {product.price}
-                //categoryId = {product.category?.id}
+                categoryId = {product.category?.id}
                 image = {product.image}
                 />
             ): null}

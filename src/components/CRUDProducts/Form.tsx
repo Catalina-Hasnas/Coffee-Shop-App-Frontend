@@ -6,7 +6,7 @@ interface formProps {
     title: string,
     amount: number,
     price: number,
-    //categoryId: number,
+    categoryId: number,
     image: string
 }
 
@@ -15,7 +15,7 @@ interface product {
     title: string,
     amount: number,
     price: number,
-    //categoryId: number,
+    categoryId: number,
     image: string
 }
 
@@ -31,7 +31,7 @@ const Form = (props: formProps): JSX.Element => {
     const [image, setImage] = useState(props.image);
     const [amount, setAmount] = useState(props.amount);
     const [price, setPrice] = useState(props.price);
-    //const [categoryId, setCategoryId] = useState(props.categoryId);
+    const [categoryId, setCategoryId] = useState(props.categoryId);
 
     const handleSubmit = async (
         e: React.FormEvent<HTMLFormElement>
@@ -44,7 +44,7 @@ const Form = (props: formProps): JSX.Element => {
             title: title || props.title,
             amount: amount || props.amount,
             price: price || props.price,
-            //categoryId: categoryId || props.categoryId,
+            categoryId: categoryId || props.categoryId,
             image: image || props.image
         }
 
@@ -136,7 +136,7 @@ const Form = (props: formProps): JSX.Element => {
                                     </label>
                                 </div>
 
-                                {/* <div className="col-span-6 sm:col-span-3">
+                                <div className="col-span-6 sm:col-span-3">
                                     <label htmlFor="categoryId" className="block text-sm font-medium text-primary-700">
                                         Category Id
                                                 <input
@@ -148,7 +148,7 @@ const Form = (props: formProps): JSX.Element => {
                                                 ev: React.ChangeEvent<HTMLInputElement>,
                                             ): void => setCategoryId(parseInt(ev.target.value))} />
                                     </label>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>
