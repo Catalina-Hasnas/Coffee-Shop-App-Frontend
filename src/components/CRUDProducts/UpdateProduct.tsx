@@ -10,6 +10,7 @@ import axios from '../../services/api';
 import { productsReducer } from '../../store/reducers/Products/productsReducer';
 import Form from './Form';
 import { ActionTypes } from '../../store/actions/actionTypes';
+import { FormTypes } from './formTypes';
 
 const UpdateProduct = (): JSX.Element => {
 
@@ -42,16 +43,17 @@ const UpdateProduct = (): JSX.Element => {
 
             { !loading? (
 
-            <div className="max-w-7xl mx-auto mt-5">
+            <div className="min-h-screen flex justify-center items-center bg-gray-200 text-gray-800">
 
             {product.id != 0? (
                 <Form 
-                id = {product.id}
+                productId = {product.id}
                 title = {product.title}
                 amount = {product.amount}
                 price = {product.price}
                 categoryId = {product.category?.id}
                 image = {product.image}
+                type = {FormTypes.update}
                 />
             ): null}
 

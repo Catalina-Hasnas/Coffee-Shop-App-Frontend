@@ -1,13 +1,17 @@
 import axios from '../../services/api';
 import React, { Fragment, useEffect, useState } from 'react';
+import { FormTypes } from './formTypes';
+import { useFormik } from 'formik';
 
-interface formProps {
-    id: number,
-    title: string,
-    amount: number,
-    price: number,
-    categoryId: number,
-    image: string
+
+interface FormProps {
+    type: FormTypes
+    productId?: number,
+    title?: string,
+    amount?: number,
+    price?: number,
+    categoryId?: number,
+    image?: string,
 }
 
 interface product {
@@ -19,13 +23,11 @@ interface product {
     image: string
 }
 
-    
-
-const Form = (props: formProps): JSX.Element => {
+const Form = (props: FormProps): JSX.Element => {
 
     useEffect(() => {
         console.log(props)
-    },[]);
+    }, []);
 
     const [title, setTitle] = useState(props.title);
     const [image, setImage] = useState(props.image);
@@ -33,37 +35,117 @@ const Form = (props: formProps): JSX.Element => {
     const [price, setPrice] = useState(props.price);
     const [categoryId, setCategoryId] = useState(props.categoryId);
 
-    const handleSubmit = async (
-        e: React.FormEvent<HTMLFormElement>
-    ): Promise<void> => {
-        e.preventDefault();
+    // const handleSubmit = async (
+    //     e: React.FormEvent<HTMLFormElement>
+    // ): Promise<void> => {
+    //     e.preventDefault();
 
-        let updatedProduct: product = {
+    //     let updatedProduct: product = {
 
-            id: props.id,
-            title: title || props.title,
-            amount: amount || props.amount,
-            price: price || props.price,
-            categoryId: categoryId || props.categoryId,
-            image: image || props.image
-        }
+    //         id: props.id,
+    //         title: title || props.title,
+    //         amount: amount || props.amount,
+    //         price: price || props.price,
+    //         categoryId: categoryId || props.categoryId,
+    //         image: image || props.image
+    //     }
 
-        axios.put("/products/" + props.id, updatedProduct)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-            });
-    }
+    //     axios.put("/products/" + props.id, updatedProduct)
+    //         .then(response => {
+    //             console.log(response)
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         });
+    // }
 
-    return (
-        <Fragment>
-            <form onSubmit={handleSubmit}>
+    const formik = useFormik({
+
+        initialValues: {
+            title: (props.type == FormTypes.update? props.title : ""),
+            amount: (props.type == FormTypes.update? props.amount : ""),
+            price: (props.type == FormTypes.update? props.price : ""),
+            categoryId: (props.type == FormTypes.update? props.categoryId : ""),
+            image: (props.type == FormTypes.update? props.image : "")
+        },
+   
+        onSubmit: values => {
+            console.log(values);
+            alert(JSON.stringify(values, null, 2));
+        },
+   
+      });
+
+      const formType = props.type == FormTypes.create? <h2 className="text-2xl font-bold leading-none mt-2"> Create Product </h2> : <h2 className="text-2xl font-bold leading-none mt-2"> Update Product </h2>
+   
+      return (
+   
+        <form className="max-w-sm w-full rounded-lg shadow-md p-5 bg-white" onSubmit={formik.handleSubmit}>
+            {formType}
+            <div className="my-4"> 
+                <div className="flex flex-col">
+                <label className="font-semibold" htmlFor="title">Title</label>
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.title}
+                    className="border rounded outline-none p-1 bg-gray-100 focus:bg-primary"
+                />
+                <label className="font-semibold" htmlFor="amount">Quantity</label>
+                <input
+                    id="amount"
+                    name="amount"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.amount}
+                    className="border rounded outline-none p-1 bg-gray-100 focus:bg-indigo-100"
+                />
+                <label className="font-semibold" htmlFor="price">Price</label>
+                <input
+                    id="price"
+                    name="price"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.price}
+                    className="border rounded outline-none p-1 bg-gray-100 focus:bg-indigo-100"
+                />
+                <label className="font-semibold" htmlFor="categoryId">Category Id</label>
+                <input
+                    id="categoryId"
+                    name="categoryId"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.categoryId}
+                    className="border rounded outline-none p-1 bg-gray-100 focus:bg-indigo-100"
+                />
+                <label className="font-semibold" htmlFor="image">Image</label>
+                <input
+                    id="image"
+                    name="image"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.image}
+                    className="border rounded outline-none p-1 bg-gray-100 focus:bg-indigo-100"
+                />
+                <button className="text-lg tracking-wide px-6 py-1 outline-none rounded bg-secondary text-white hover:bg-blue-800" type="submit">Submit</button>
+            </div>
+            </div>
+   
+        </form>
+   
+      );
+   
+    };
+
+    // return (
+    //     <Fragment>
+            {/* <form>
                 <div className="shadow overflow-hidden sm:rounded-md">
                     <div className="px-4 py-5 bg-white sm:p-6">
                         <div className="grid grid-cols-6 gap-6">
-                            <div className="col-span-6 sm:col-span-3">
+                            <div className="col-span-6 sm:col-span-3"> */}
 
                                 {/* <div className="col-span-6 sm:col-span-3">
                                                 <label htmlFor="country" className="block text-sm font-medium text-gray-700">
@@ -81,7 +163,7 @@ const Form = (props: formProps): JSX.Element => {
                                                 </select>
                                             </div> */}
 
-                                <div className="col-span-6 sm:col-span-3">
+                                {/* <div className="col-span-6 sm:col-span-3">
                                     <label htmlFor="title" className="block text-sm font-medium text-primary-700">
                                         Title:
                                                 <input
@@ -91,7 +173,7 @@ const Form = (props: formProps): JSX.Element => {
                                             className="mt-1 block w-full shadow-sm sm:text-sm border rounded-md"
                                             onChange={(
                                                 ev: React.ChangeEvent<HTMLInputElement>,
-                                            ): void => setTitle(ev.target.value)} /> 
+                                            ): void => setTitle(ev.target.value)} />
                                     </label>
                                 </div>
 
@@ -161,10 +243,9 @@ const Form = (props: formProps): JSX.Element => {
                                 </button>
                     </div>
                 </div>
-            </form>
-        </Fragment>
-        
-    )
-};
+            </form> */}
+        // </Fragment>
 
-export  default Form;
+    //)
+
+export default Form;
