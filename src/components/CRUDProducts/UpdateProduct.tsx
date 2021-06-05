@@ -11,6 +11,7 @@ import { productsReducer } from '../../store/reducers/Products/productsReducer';
 import Form from './Form';
 import { ActionTypes } from '../../store/actions/actionTypes';
 import { FormTypes } from './formTypes';
+import { useFormik } from 'formik';
 
 const UpdateProduct = (): JSX.Element => {
 
@@ -37,28 +38,36 @@ const UpdateProduct = (): JSX.Element => {
         }
     },[]);
 
+    
     return (
 
         <Fragment>
 
             { !loading? (
-
-            <div className="min-h-screen flex justify-center items-center bg-gray-200 text-gray-800">
-
-            {product.id != 0? (
-                <Form 
-                productId = {product.id}
-                title = {product.title}
-                amount = {product.amount}
-                price = {product.price}
-                categoryId = {product.category?.id}
-                image = {product.image}
-                type = {FormTypes.update}
-                />
-            ): null}
-
                 
+
+                <div className="bg-gray-200">
+                    <Link to="/backoffice">
+                        <button className="p-3 bg-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path className="text-gray-50" strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                            </svg>
+                        </button>
+                    </Link>
             
+                <div className="min-h-screen flex justify-center items-center bg-gray-200 text-gray-800">
+                    {product.id != 0? (
+                        <Form 
+                        productId = {product.id}
+                        title = {product.title}
+                        amount = {product.amount}
+                        price = {product.price}
+                        categoryId = {product.category?.id}
+                        image = {product.image}
+                        type = {FormTypes.update}
+                        />
+                    ): null}
+                </div>
             </div>
 
         ) : <Loading/> }
