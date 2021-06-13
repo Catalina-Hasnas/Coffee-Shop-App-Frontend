@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { ActionTypes } from '../../store/actions/actionTypes';
 import { Formik, Field, Form as FormikForm } from 'formik';
+import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 
 interface FormProps {
@@ -42,6 +43,24 @@ const Form = (props: FormProps): JSX.Element => {
                     categoryId: props.type == FormTypes.update? props.categoryId : "",
                     image: props.type == FormTypes.update? props.image : ""
                 }}
+
+                validationSchema={Yup.object({
+                    title: Yup.string()
+                        .required("Please enter a title"),
+                    
+                    amount: Yup.number()
+                      .required("Please enter the number of products on stock")
+                      .positive("Please enter a positive number")
+                      .integer("Please enter an integer"),
+                    
+                    price: Yup.number()
+                        .required("Please enter the number of products in stock")
+                        .positive("Please enter a positive number"),
+                    
+                    image: Yup.string()
+                        .required("Please enter a url for an image")
+                        .url("Please enter a url"),
+                })}
                 
                 onSubmit={async (values) => {
                     if (props.type == FormTypes.update) {
@@ -79,8 +98,10 @@ const Form = (props: FormProps): JSX.Element => {
                                 console.log(error)
                             } );
                     }
-                }}
-                >
+                }}>
+
+                {({ errors, touched }) => (
+
                 <FormikForm className="max-w-sm w-full rounded-sm shadow-md p-5 bg-white">
 
                     {formType}
@@ -90,19 +111,32 @@ const Form = (props: FormProps): JSX.Element => {
 
                         <label className="font-semibold" htmlFor="title">Title</label>
                         <Field className="border rounded outline-none p-1 bg-gray-100" id="title" name="title"/>
+                        {errors.title && touched.title ? (
+                            <p className="text-xs text-red-500">{errors.title}</p>
+                        ) : null}
 
                         <label className="font-semibold" htmlFor="amount">Quantity</label>
                         <Field className="border rounded outline-none p-1 bg-gray-100" id="amount" name="amount"/>
+                        {errors.amount && touched.amount ? (
+                            <p className="text-xs text-red-500">{errors.amount}</p>
+                        ) : null}
 
                         <label className="font-semibold" htmlFor="price">Price</label>
                         <Field className="border rounded outline-none p-1 bg-gray-100" id="price" name="price"/>
+                        {errors.price && touched.price ? (
+                            <p className="text-xs text-red-500">{errors.price}</p>
+                        ) : null}
 
-                        <label className="font-semibold" htmlFor="price">Image</label>
+                        <label className="font-semibold" htmlFor="image">Image</label>
                         <Field className="border rounded outline-none p-1 bg-gray-100" id="image" name="image"/>
+                        {errors.image && touched.image ? (
+                            <p className="text-xs text-red-500">{errors.image}</p>
+                        ) : null}
 
-                        <label className="font-semibold" htmlFor="price">Category Id</label>
-                        <Field className="border rounded outline-none p-1 bg-gray-100" id="categoryId" name="categoryId"/>
-
+                        <label className="font-semibold" htmlFor="categoryId">Category Id</label>
+                        <Field className="border rounded outline-none p-1 bg-gray-100" as="select" id="categoryId" name="categoryId">
+                            {["Coffee", "Tea", "Milk", "Sweeteners", "Coffee Machines"].map((i:string, index: number)=>(<option key={i} value={index + 1}>{i}</option>))}
+                        </Field>
 
                         <button className="mt-5 self-center w-1/2 text-lg tracking-wide px-6 py-1 outline-none rounded-sm bg-secondary text-white" type="submit">Submit</button>
 
@@ -111,6 +145,7 @@ const Form = (props: FormProps): JSX.Element => {
                     </div>
                     
                 </FormikForm>
+                )}
             </Formik>
         </Fragment>
     )
