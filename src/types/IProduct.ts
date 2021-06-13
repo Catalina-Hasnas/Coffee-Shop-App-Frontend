@@ -11,4 +11,9 @@ export default interface IProduct {
         id: number,
         name: string
     }
+    promotion?: {
+        id: number,
+        discount: number,
+        promotionalText: string
+    }
 }

@@ -65,6 +65,7 @@ const UpdateProduct = (): JSX.Element => {
                         categoryId = {product.category?.id}
                         image = {product.image}
                         type = {FormTypes.update}
+                        promotion = {product.promotion}
                         />
                     ): null}
                 </div>
