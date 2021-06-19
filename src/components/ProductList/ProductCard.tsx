@@ -19,15 +19,15 @@ const dispatch = useDispatch()
 
 const linkTo = props.environment?.includes("/backoffice") ? (
     <Link to={`/backoffice/update/${props.id}`}>
-        <button className="p-3 bg-secondary text-primaryLight tracking-wider">
+        <div className="my-3 p-3 border-t-2 border-b-2 border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
             Update Product           
-        </button>
+        </div>
     </Link>
 
 ) : (
 
     <Link to="/">
-        <button onClick={() => dispatch({ 
+        <div onClick={() => dispatch({ 
                                     type: ActionTypes.addToCart, 
                                     payload: {
                                             id: props.id, 
@@ -37,25 +37,25 @@ const linkTo = props.environment?.includes("/backoffice") ? (
                                             title: props.title,
                                             totalPrice: props.price
                                             } })}
-                className="p-3 bg-secondary text-primaryLight tracking-wider">
+                className="my-3 p-3 border-t-2 border-b-2 border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
             Add to cart            
-        </button>
+        </div>
     </Link>
 )
 
     return (
         <Fragment>
             <Link to={`/${props.id}`}>
-                <div className="bg-bg rounded-sm shadow-md text-center w-60">
+                <div className="bg-bg rounded-sm border-secondary text-center w-60 overflow-hidden">
                 
                     <div className="w-60 h-full">
                         <img src={props.image} />
                     </div>
                 
 
-                    <div className="mt-10">
-                        <p>{props.title}</p>
-                        <p>{props.price}</p>
+                    <div className="mt-3">
+                        <p className="mb-3 tracking-wider">{props.title}</p>
+                        <span className="rounded-sm text-primary tracking-wide text-lg">{props.price} $</span>
                     </div>
 
                     {linkTo}
