@@ -8,8 +8,6 @@ import Header from '../Header/Header';
 
 const Loading = (props: any): JSX.Element => {
 
-    
-
     const dispatch = useDispatch();
     const history = useHistory();
     const location = {
@@ -29,7 +27,7 @@ const Loading = (props: any): JSX.Element => {
 
     return (
         <div>
-            <Header></Header>
+            <Header notFound={true} />
         </div>
         );
 }
