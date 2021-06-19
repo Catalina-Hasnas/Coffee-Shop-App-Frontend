@@ -23,7 +23,7 @@ const Header = (props: headerProps): JSX.Element => {
 
     return (
         <Fragment>
-            <header className="h-large">
+            <header className="h-large relative">
                 <div className="h-full bg-header bg-cover bg-center flex flex-col justify-end content-center items-center">
                     {headerMessage}
                 </div>
