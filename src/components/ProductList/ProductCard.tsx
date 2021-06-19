@@ -10,7 +10,12 @@ interface IProductCardProps {
     title: string,
     image: string,
     price: number,
-    environment?: string
+    environment?: string,
+    promotion?: { 
+        id: number, 
+        discount: number, 
+        promotionalText: string
+    }
 }
 
 const ProductCard = (props:IProductCardProps): JSX.Element => {
@@ -46,16 +51,22 @@ const linkTo = props.environment?.includes("/backoffice") ? (
     return (
         <Fragment>
             <Link to={`/${props.id}`}>
-                <div className="bg-bg rounded-sm border-secondary text-center w-60 overflow-hidden">
+                <div className="bg-bg rounded-sm border-secondary text-center w-60 overflow-hidden relative">
                 
                     <div className="w-60 h-full">
                         <img src={props.image} />
                     </div>
-                
+                    {props.promotion? <div className="bg-secondary p-2 top-px left-32 rounded-md text-primaryLight text-xs my-2 absolute"> {props.promotion.promotionalText} </div> : <div></div>}
 
                     <div className="mt-3">
                         <p className="mb-3 tracking-wider">{props.title}</p>
-                        <span className="rounded-sm text-primary tracking-wide text-lg">{props.price} $</span>
+                        {props.promotion? (
+                            <Fragment>
+                                <span className="text-sm mr-1 text-gray-500"> {props.price} </span>
+                                <span className="rounded-md bg-secondary p-1 text-primaryLight tracking-wide text-lg">{props.price-props.promotion.discount} $</span>
+                            </Fragment>
+                        ) :
+                            <span className="rounded-sm text-primary tracking-wide text-lg">{props.price} $</span>}
                     </div>
 
                     {linkTo}

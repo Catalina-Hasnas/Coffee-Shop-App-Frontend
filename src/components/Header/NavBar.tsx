@@ -15,7 +15,8 @@ interface NavBarProps {
 const NavBar = (props: NavBarProps): JSX.Element => {
 
     const itemsInCart = props.orderItemsLength? <span className="p-2.5 rounded-full bg-red-800 text-xs text-primaryLight h-2 w-2 flex items-center justify-center"> {props.orderItemsLength} </span> :
-                                                <span className="p-2 rounded-full bg-primary text-xs text-primaryLight h-1.5 w-1.5 flex items-center justify-center"  > </span>
+                                                null
+                                                
                                                 
 
     return (
@@ -49,8 +50,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                                             </button>
 
                                             {itemsInCart}
-                                            
-                                            {/* <span className="p-2 rounded-full bg-primary text-xs text-primaryLight h-1.5 w-1.5 flex items-center justify-center"  > {props.orderItemsLength ? props.orderItemsLength : null } </span> */}
                                             
                                         </Link>
 
