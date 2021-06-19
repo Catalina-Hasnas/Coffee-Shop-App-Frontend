@@ -11,7 +11,7 @@ const fetchProducts = (products: IProduct []): Action => ({
     payload: products
 })
 
-const fetchProductsFail = (error: any): Action => ({
+export const fetchProductsFail = (error: any): Action => ({
     type: ActionTypes.fetchProductsFail,
     payload: error
 })
@@ -37,8 +37,7 @@ export const getAllProducts: ActionCreator<
             dispatch(fetchProducts(products));
         } )
         .catch( error => {
-            console.log(error)
-            dispatch(fetchProductsFail(error))
+            dispatch(fetchProductsFail(error.response.data))
         } );
     }
 }
@@ -54,7 +53,8 @@ export const getProductById: ActionCreator<
             console.log(res.data)
         } )
         .catch( error => {
-            console.log(error)
+            console.log(error.response.data)
+            dispatch(fetchProductsFail(error.response.data))
         } );
     }
 }

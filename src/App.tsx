@@ -8,6 +8,7 @@ import UpdateProduct from './components/CRUDProducts/UpdateProduct';
 
 import { Switch, Route } from "react-router-dom";
 import Cart from './containers/Cart';
+import NotFound from './components/UI/NotFound';
 
 const App = (): JSX.Element => {
   return (
@@ -18,8 +19,10 @@ const App = (): JSX.Element => {
         <Route exact path='/backoffice/add' component = {AddProduct} />
         <Route exact path='/backoffice' component = {ReadProducts} />
         <Route exact path='/cart' component={Cart}/>
-        <Route exact path='/:id' component={ProductPage} /> 
+        <Route exact path='/error/404' component = {NotFound} />
+        <Route exact path='/:id' component={ProductPage} />
         <Route exact path='/' component = {Home} />
+        <Route component={NotFound} />
       </Switch>
     </Fragment>
   );

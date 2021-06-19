@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getProductById } from '../store/actions/Products/index';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
+import { fetchProductsFail, getProductById } from '../store/actions/Products/index';
 import { IRootState } from '../index';
 import { useThunkDispatch } from '../store/hooks';
 import { useSelector, useDispatch } from "react-redux";
@@ -16,22 +16,27 @@ const ProductPage = (): JSX.Element => {
 
     const dispatchThunk = useThunkDispatch();
     const dispatch = useDispatch();
+    const history = useHistory();
     const product = useSelector<IRootState, IProduct>(state => state.products.product);  
     const loading = useSelector<IRootState, boolean>(state => state.products.loading);  
     const orderItems = useSelector<IRootState, IOrderItem[]>(state => state.cart.orderItems);
-
+    const fetchingError = useSelector<IRootState, any>(state => state.products.error);  
     const [amount, setAmount] = useState(1);
-
     interface ParamTypes {
         id: string
     }
 
     let {id} = useParams<ParamTypes>();
-
     useEffect(() => {
         dispatchThunk(getProductById(id));
     }, []);
 
+    if (fetchingError) {
+        const location = {
+            pathname: '/error/404'
+        }
+        history.push(location);
+    }
     let navBar = orderItems ? <NavBar orderItemsLength = {orderItems.length} /> : <NavBar />
 
     return (
