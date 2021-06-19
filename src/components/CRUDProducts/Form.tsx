@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { FormTypes } from './formTypes';
 import { Formik, Field, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
 
@@ -46,6 +46,7 @@ const Form = (props: FormProps): JSX.Element => {
 
     const [open, setOpen] = useState(false)
 
+    const [submitted, setSubmitted] = useState(false);
     const cancelButtonRef = useRef(null)
 
     const fetchPromotions = () => {
@@ -171,6 +172,7 @@ const Form = (props: FormProps): JSX.Element => {
                         axios.put("/products/" + props.productId, updatedProduct)
                             .then(response => {
                                 console.log(response)
+                                setSubmitted(true)
                             })
                             .catch(error => {
                                 console.log(error)
@@ -187,6 +189,7 @@ const Form = (props: FormProps): JSX.Element => {
                         axios.post('/products', newProduct)
                             .then(response => {
                                 console.log(response)
+                                setSubmitted(true)
                             })
                             .catch(error => {
                                 console.log(error)
@@ -203,42 +206,48 @@ const Form = (props: FormProps): JSX.Element => {
                         <div className="my-4">
                             <div className="flex flex-col">
 
-                                <label className="font-semibold" htmlFor="title">Title</label>
+                                <label className="font-semibold mb-2" htmlFor="title">Title</label>
                                 <Field className="border rounded outline-none p-1 bg-gray-100" id="title" name="title" />
                                 {errors.title && touched.title ? (
                                     <p className="text-xs text-red-500">{errors.title}</p>
                                 ) : null}
 
-                                <label className="font-semibold" htmlFor="amount">Quantity</label>
+                                <label className="font-semibold my-2" htmlFor="amount">Quantity</label>
                                 <Field className="border rounded outline-none p-1 bg-gray-100" id="amount" name="amount" />
                                 {errors.amount && touched.amount ? (
                                     <p className="text-xs text-red-500">{errors.amount}</p>
                                 ) : null}
 
-                                <label className="font-semibold" htmlFor="price">Price</label>
+                                <label className="font-semibold my-2" htmlFor="price">Price</label>
                                 <Field className="border rounded outline-none p-1 bg-gray-100" id="price" name="price" />
                                 {errors.price && touched.price ? (
                                     <p className="text-xs text-red-500">{errors.price}</p>
                                 ) : null}
 
-                                <label className="font-semibold" htmlFor="image">Image</label>
+                                <label className="font-semibold my-2" htmlFor="image">Image</label>
                                 <Field className="border rounded outline-none p-1 bg-gray-100" id="image" name="image" />
                                 {errors.image && touched.image ? (
                                     <p className="text-xs text-red-500">{errors.image}</p>
                                 ) : null}
 
-                                <label className="font-semibold" htmlFor="categoryId">Category Id</label>
+                                <label className="font-semibold my-2" htmlFor="categoryId">Category Id</label>
                                 <Field className="border rounded outline-none p-1 bg-gray-100" as="select" id="categoryId" name="categoryId">
                                     {["Coffee", "Tea", "Milk", "Sweeteners", "Coffee Machines"].map((i: string, index: number) => (<option key={i} value={index + 1}>{i}</option>))}
                                 </Field>
 
-                                <label className="font-semibold" htmlFor="hasPromotion">
-                                    <Field className="font-semibold" htmlFor="hasPromotion" type="checkbox" name="hasPromotion" />
+                                <label className="font-semibold my-2" htmlFor="hasPromotion">
+                                    <Field className="font-semibold mr-2" htmlFor="hasPromotion" type="checkbox" name="hasPromotion" />
                                     Has promotion
                                 </label>
 
                                 {values.hasPromotion ? promotionInfo : null}
 
+                                {submitted? (
+                                    <div className="flex flex-col my-2">
+                                        <p style={{animationIterationCount: 1}} className="tracking-wide text-green-700 animate-pulse">Product successfully submitted!</p>
+                                        <Link className="text-xs text-secondary" to="/backoffice"> return to backoffice </Link>
+                                    </div>
+                                ) : null}
                                 <button className="mt-5 self-center w-1/2 text-lg tracking-wide px-6 py-1 outline-none rounded-sm bg-secondary text-white" type="submit">Submit</button>
 
                             </div>
@@ -300,11 +309,11 @@ const Form = (props: FormProps): JSX.Element => {
                                         </div>
                                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                             <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                                Deactivate account
+                                                Are you sure you want to delete this product?
                                             </Dialog.Title>
                                             <div className="mt-2">
                                                 <p className="text-sm text-gray-500">
-                                                    Are you sure you want to delete this product? The data will be permanently removed.
+                                                    The data will be permanently removed.
                                                     This action cannot be undone.
                                                 </p>
                                             </div>
@@ -321,7 +330,7 @@ const Form = (props: FormProps): JSX.Element => {
                                     </button>
                                     <button
                                         type="button"
-                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                                         onClick={() => setOpen(false)}
                                         ref={cancelButtonRef}
                                     >
