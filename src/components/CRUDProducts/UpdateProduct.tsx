@@ -55,7 +55,7 @@ const UpdateProduct = (): JSX.Element => {
                         </button>
                     </Link>
             
-                <div className="min-h-screen flex justify-center items-center bg-gray-200 text-gray-800">
+                <div className="min-h-screen flex flex-col justify-center items-center bg-gray-200 text-gray-800">
                     {product.id != 0? (
                         <Form 
                         productId = {product.id}
