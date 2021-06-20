@@ -5,4 +5,5 @@ export default interface IOrderItem {
     unitPrice: number,
     image: string,
     title: string,
+    stock: number
 }

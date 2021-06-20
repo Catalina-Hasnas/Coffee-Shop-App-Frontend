@@ -23,6 +23,7 @@ const ProductList = (props:IProductListProps): JSX.Element => {
                                 title = {product.title}
                                 image = {product.image}
                                 price = {product.price}
+                                stock={product.amount}
                                 promotion = {product.promotion}
                                 environment = {props.environment}
                             />

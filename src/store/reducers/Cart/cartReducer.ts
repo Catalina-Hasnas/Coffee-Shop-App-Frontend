@@ -21,13 +21,14 @@ export const cartReducer = (state: ICartState = initialState, action: Action) : 
                 var orderItems = [...state.orderItems];
                 var existingItemIndex: number = orderItems.findIndex(item => item.id === action.payload.id);
                 var updatedAmount: number = orderItems[existingItemIndex].amount + action.payload.amount;
-                orderItems[existingItemIndex].amount = updatedAmount;
+                if (updatedAmount <= orderItems[existingItemIndex].stock) {
+                    orderItems[existingItemIndex].amount = updatedAmount;
+                }
                 var updatedPrice: number = orderItems[existingItemIndex].unitPrice * orderItems[existingItemIndex].amount;
                 orderItems[existingItemIndex].totalPrice = updatedPrice;
             } else {
                 orderItems = [...state.orderItems, action.payload];
             }
-            
             localStorage.setItem('orderItems', JSON.stringify(orderItems));
             console.log(localStorage);
             console.log({...state, orderItems: orderItems});
@@ -36,7 +37,9 @@ export const cartReducer = (state: ICartState = initialState, action: Action) : 
         case ActionTypes.updateCart: {
             var orderItems = [...state.orderItems];
             var orderItemIndex: number = orderItems.findIndex(item => item.id === action.payload.id);
-            orderItems[orderItemIndex].amount = action.payload.amount;
+            if (action.payload.amount <= orderItems[orderItemIndex].stock) {
+                orderItems[orderItemIndex].amount = action.payload.amount;
+            }
             orderItems[orderItemIndex].totalPrice = orderItems[orderItemIndex].unitPrice * action.payload.amount;
 
             if (orderItems[orderItemIndex].amount <= 0) {

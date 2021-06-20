@@ -11,6 +11,7 @@ interface IProductCardProps {
     image: string,
     price: number,
     environment?: string,
+    stock: number,
     promotion?: { 
         id: number, 
         discount: number, 
@@ -37,10 +38,11 @@ const linkTo = props.environment?.includes("/backoffice") ? (
                                     payload: {
                                             id: props.id, 
                                             amount: 1, 
-                                            unitPrice: props.price,
+                                            unitPrice: props.promotion != null? props.price - props.promotion.discount : props.price,
                                             image: props.image,
                                             title: props.title,
-                                            totalPrice: props.price
+                                            totalPrice: props.promotion != null? props.price - props.promotion.discount : props.price,
+                                            stock: props.stock
                                             } })}
                 className="my-3 p-3 border-t-2 border-b-2 border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
             Add to cart            

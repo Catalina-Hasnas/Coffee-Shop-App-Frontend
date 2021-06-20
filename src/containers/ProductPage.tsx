@@ -39,6 +39,9 @@ const ProductPage = (): JSX.Element => {
     }
     let navBar = orderItems ? <NavBar orderItemsLength = {orderItems.length} /> : <NavBar />
 
+    const disablePlusButton = () => amount >= product.amount ? true : false;
+
+    const disableMinusButton = () => amount <= 1 ? true : false;
     return (
 
         <Fragment>
@@ -53,18 +56,16 @@ const ProductPage = (): JSX.Element => {
 
                             <div className="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2 flex flex-col items-center">
                                 <h3 className="uppercase text-lg">{product.title}</h3>
-                                <span className="mt-3">{product.price}$</span>
+                                <span className="mt-3">{(product.promotion? product.price - product.promotion.discount : product.price).toFixed(2)}$</span>
                                 <hr className="my-3"/>
                                 <div className="mt-2 flex flex-col items-center">
+
                                     <p className="my-2"> Quantity: {amount} </p>
+                                    { amount == product.amount? 
+                                    <p className="text-xs">There are only {product.amount} products left in stock.</p> : null }
                                     <div className="flex mt-1">
-                                        <button className="px-2 mr-3 border-secondary rounded-sm border" onClick={() => setAmount(amount + 1)}>
-                                            +
-                                        </button>
-                                        
-                                        <button className="px-2 border-secondary rounded-sm border" onClick={() => setAmount(amount - 1)}>
-                                            -
-                                        </button>
+                                        <input type="button" value="+" disabled={disablePlusButton()} className="px-2 mr-3 bg-transparent border-secondary rounded-sm border" onClick={() => setAmount(amount + 1)}/>
+                                        <input type="button" value="-" disabled={disableMinusButton()} className="bg-transparent px-2 border-secondary rounded-sm border" onClick={() => setAmount(amount - 1)}/>
                                     </div>
 
                                     <div className="flex items-end mt-3">
@@ -73,11 +74,12 @@ const ProductPage = (): JSX.Element => {
                                                     payload: {
                                                         id: product.id, 
                                                         amount: amount > 0 ? amount : 1, 
-                                                        unitPrice: product.price,
-                                                        totalPrice: product.price * amount,
+                                                        unitPrice: product.promotion != null? product.price - product.promotion.discount : product.price,
+                                                        totalPrice: (product.promotion != null? product.price - product.promotion.discount : product.price) * amount,
                                                         image: product.image,
-                                                        title: product.title} 
-                                                    })}
+                                                        title: product.title,
+                                                        stock: product.amount
+                                                    }})}
                                                     className="mr-2 p-3 rounded-sm bg-secondary text-primaryLight tracking-wider">
                                                 Add to cart            
                                             </button>

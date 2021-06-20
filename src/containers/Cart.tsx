@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-
 import { IRootState } from '../index';
 import { useSelector, useDispatch } from "react-redux";
 import Loading from '../components/UI/Loading';
@@ -50,7 +49,6 @@ const Cart = (): JSX.Element => {
             } );
     }
 
-
     let navBar = orderItems ? <NavBar orderItemsLength = {orderItems.length} /> : <NavBar />
 
     return (
@@ -80,12 +78,13 @@ const Cart = (): JSX.Element => {
                                                 totalPrice = {item.totalPrice}
                                                 unitPrice = {item.unitPrice}
                                                 title = {item.title}
+                                                stock= {item.stock}
                                             />
                                         )
                         })}
 
-                        <Link to="/" className="flex font-semibold text-indigo-600 text-sm mt-10">
-                            <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" /></svg>
+                        <Link to="/" className="flex font-semibold text-secondary text-sm mt-10">
+                            <svg className="fill-current mr-2 text-secondary w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" /></svg>
                             Continue Shopping
                         </Link>
                     </div>
@@ -93,7 +92,7 @@ const Cart = (): JSX.Element => {
                         <h1 className="font-semibold text-2xl border-b pb-8">Order Summary</h1>
                         <div className="flex justify-between mt-10 mb-5">
                             <span className="font-semibold text-sm uppercase">Items {orderItems.length}</span>
-                            <span className="font-semibold text-sm">{priceSum}</span>
+                            <span className="font-semibold text-sm">{priceSum.toFixed(2)}$</span>
                         </div>
                         <div>
                             <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
@@ -109,7 +108,7 @@ const Cart = (): JSX.Element => {
                         <div className="border-t mt-8">
                             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                                 <span>Total cost</span>
-                                <span>{priceSum}</span>
+                                <span>{priceSum.toFixed(2)}$</span>
                             </div>
                             <button onClick={() => startOrder(orderItems)} className="bg-secondary font-semibold py-3 text-sm text-primaryLight uppercase w-full">Checkout</button>
                         </div>
