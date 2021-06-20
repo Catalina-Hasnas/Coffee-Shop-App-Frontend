@@ -7,7 +7,7 @@ import ProfileDropdown from './ProfileDropdown';
 import ICategory from '../../types/ICategory';
 import IOrderItem from '../../types/IOrderItem';
 
-const profile = ['Your Profile', 'Your orders', 'Sign out'];
+const profile = ['Backoffice', 'Your Profile', 'Your orders', 'Sign out'];
 interface NavBarProps {
     orderItemsLength?: number
 }

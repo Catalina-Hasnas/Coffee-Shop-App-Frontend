@@ -15,7 +15,7 @@ const Header = (props: headerProps): JSX.Element => {
         </Fragment>
     ) : (
         <Fragment>
-            <p className=" mr-8 text-6xl font-bold text-primary">All of your coffee needs</p>
+            <span className="bg-bg pr-8 sm:bg-transparent text-6xl font-bold text-primary bg-opacity-50">All of your coffee needs</span>
             <p className="text-4xl mr-8 text-primary my-3">in one place </p>
             <Link to="categories/1" className="bg-secondary rounded-sm p-4 mb-28 mt-3 text-bg tracking-wide"> SHOP HERE </Link>
         </Fragment>
