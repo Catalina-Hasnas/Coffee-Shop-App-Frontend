@@ -51,7 +51,7 @@ const OrderItem = (props: IProductCardProps): JSX.Element => {
         <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5 text-primary">
             <div className="flex items-center w-2/5"> 
                 <div className="">
-                    <img className="md: h-24" src={props.image} alt={props.title} />
+                    <img className="w-24 h-20" src={props.image} alt={props.title} />
                 </div>
                 <div className="flex flex-col items-center justify-between ml-4 md:scale-100">
 
