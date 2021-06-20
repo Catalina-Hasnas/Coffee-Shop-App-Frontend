@@ -92,14 +92,14 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                                         <div className="text-base font-medium leading-none">Catalina Hasnas</div>
                                         <div className="text-sm font-medium leading-none">catalina@example.com</div>
                                     </div>
-                                    <button className="ml-auto flex-shrink-0 p-1 focus:outline-none focus:ring-1 focus:ring-secondary focus:ring-opacity-25">
+                                    <Link to={"/cart"} className="ml-auto flex-shrink-0 p-1 focus:outline-none focus:ring-1 focus:ring-secondary focus:ring-opacity-25">
                                         <ShoppingCartIcon className="h-6 w-6 text-secondary" aria-hidden="true" />
-                                    </button>
+                                    </Link>
                                 </div>
                                 <div className="mt-3 px-2 space-y-1">
                                     {profile.map((item) => (
                                         <Link to={`/${item}`}
-                                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                                            className="block px-3 py-2 rounded-md text-base font-medium text-primary"
                                         >
                                             {item}
                                         </Link>

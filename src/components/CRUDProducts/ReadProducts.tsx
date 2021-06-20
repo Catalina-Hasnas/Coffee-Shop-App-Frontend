@@ -26,7 +26,7 @@ const ReadProducts = (props: any): JSX.Element => {
     return (
         <div className="max-w-7xl mx-auto px-8 py-8 flex flex-col justify-items-center items-center relative">
             <Link className="absolute left-6 top-6" to="/">
-                        <button className="p-3 bg-secondary">
+                        <button className="p-3 bg-secondary hidden md:block">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path className="text-gray-50" strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                             </svg>

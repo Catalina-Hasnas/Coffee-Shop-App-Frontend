@@ -48,13 +48,13 @@ const OrderItem = (props: IProductCardProps): JSX.Element => {
 
     return (
         <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5 text-primary">
-            <div className="flex w-2/5"> 
-                <div className="w-25">
-                    <img className="h-24" src={props.image} alt={props.title} />
+            <div className="flex items-center w-2/5"> 
+                <div className="">
+                    <img className="md: h-24" src={props.image} alt={props.title} />
                 </div>
-                <div className="flex flex-col items-center justify-between ml-4 flex-grow">
+                <div className="flex flex-col items-center justify-between ml-4 md:scale-100">
 
-                    <span className="font-bold text-lg">{props.title}</span>
+                    <span className="font-bold md:text-lg">{props.title}</span>
                     
                     <button onClick={() => dispatch({ 
                                 type: ActionTypes.updateCart, 
@@ -66,20 +66,20 @@ const OrderItem = (props: IProductCardProps): JSX.Element => {
                                     image: props.image,
                                     title: props.title} 
                                 })} 
-                            className="rounded-sm font-semibold p-2 bg-secondary text-primaryLight text-xs">
+                            className="rounded-sm font-semibold p-2 bg-secondary text-primaryLight text-xs transform scale-90 md:scale-100">
                             Remove
                     </button>
                 </div>
             </div>
 
             { amount == props.stock? 
-                <p className="text-xs">There are only {props.stock} products left in stock.</p> : null }
+                <p className="text-xs hidden md:block">There are only {props.stock} products left in stock.</p> : null }
             
-            <div className="flex justify-center w-1/5">
+            <div className="flex flex-col items-center md:flex-row md:justify-center w-1/5">
 
                 <input type="button" value="+" className="px-2 bg-transparent border-secondary rounded-sm border" disabled={disableButton()} onClick={() => setAmount(amount + 1)}/>
                     
-                <input className="mx-2 border text-center w-8" type="text" value={amount > props.stock ? props.stock : amount} onChange={e => verifyStock(parseInt(e.target.value))} />
+                <input className="mx-2 my-2 md:my-0 border text-center w-8" type="text" value={amount > props.stock ? props.stock : amount} onChange={e => verifyStock(parseInt(e.target.value))} />
 
                 <input type="button" value="-" className="px-2 bg-transparent border-secondary rounded-sm border" onClick={() => setAmount(amount - 1)}/>
                 
