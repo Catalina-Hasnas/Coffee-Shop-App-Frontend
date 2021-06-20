@@ -29,15 +29,15 @@ const CategoriesPage = (): JSX.Element => {
         dispatch(getCategoryById(categoryId));
     }, [categoryId]);
 
-
-
     let productList = loading ? <Loading/> : <ProductsList products = {category.products}/>
 
     return (
 
         <div>
             <NavBar/>
-            {productList}
+            <div className="mt-6">
+                {productList}
+            </div>
         </div>
     )
     
