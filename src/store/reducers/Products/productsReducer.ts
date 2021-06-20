@@ -16,7 +16,7 @@ const initialState = {
         id: 0,
         amount: 0,
         image: "",
-        price: 0,
+        price: 0.0,
         title: "",
         description: "",
         createdAt: new Date(),

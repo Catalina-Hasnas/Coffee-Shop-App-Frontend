@@ -58,7 +58,7 @@ const ProductPage = (): JSX.Element => {
 
                             <div className="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2 flex flex-col items-center">
                                 <h3 className="uppercase text-lg">{product.title}</h3>
-                                <span className="mt-3">{(product.promotion !== undefined && product.promotion !== null? product.price - product.promotion.discount : product.price).toFixed(2)}$</span>
+                                <span className="mt-3">{(product.promotion !== undefined && product.promotion !== null ? (product.price - product.promotion.discount).toFixed(2) : (product.price - 0).toFixed(2))}$</span>
                                 <hr className="my-3"/>
                                 <div className="mt-2 flex flex-col items-center">
 

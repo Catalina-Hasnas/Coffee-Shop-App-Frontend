@@ -43,7 +43,7 @@ const linkTo = props.environment?.includes("/backoffice") ? (
                                             totalPrice: props.promotion != null? props.price - props.promotion.discount : props.price,
                                             stock: props.stock
                                             } })}
-                className="my-3 p-3 border-t-2 border-b-2 border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
+                className="text-center my-3 p-3 border-t-2 border-b-2 border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
             Add to cart            
         </div>
     </Link>
