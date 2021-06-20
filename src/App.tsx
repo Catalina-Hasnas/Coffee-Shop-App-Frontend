@@ -20,7 +20,7 @@ const App = (): JSX.Element => {
         <Route exact path='/backoffice' component = {ReadProducts} />
         <Route exact path='/cart' component={Cart}/>
         <Route exact path='/error/404' component = {NotFound} />
-        <Route exact path='/:id' component={ProductPage} />
+        <Route exact path='/products/:id' component={ProductPage} />
         <Route exact path='/' component = {Home} />
         <Route component={NotFound} />
       </Switch>

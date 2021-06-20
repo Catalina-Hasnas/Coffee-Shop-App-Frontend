@@ -52,7 +52,7 @@ const linkTo = props.environment?.includes("/backoffice") ? (
 
     return (
         <Fragment>
-            <Link to={`/${props.id}`}>
+            <Link to={`/products/${props.id}`}>
                 <div className="bg-bg rounded-sm border-secondary text-center w-60 overflow-hidden relative">
                 
                     <div className="w-60 h-full">
