@@ -11,13 +11,14 @@ import { productsReducer } from '../store/reducers/Products/productsReducer';
 import ICategory from '../types/ICategory';
 import { getCategoryById } from '../store/actions/Categories';
 import ProductsList from '../components/ProductList/ProductList';
+import IOrderItem from '../types/IOrderItem';
 
 const CategoriesPage = (): JSX.Element => {
 
     const dispatch = useThunkDispatch();
     const loading = useSelector<IRootState, boolean>(state => state.categories.loading);  
-    const categories = useSelector<IRootState, ICategory[]>(state => state.categories.categories);
     const category =  useSelector<IRootState, ICategory>(state => state.categories.category);
+    const orderItems = useSelector<IRootState, IOrderItem[]>(state => state.cart.orderItems);
 
     interface ParamTypes {
         categoryId: string
@@ -34,7 +35,7 @@ const CategoriesPage = (): JSX.Element => {
     return (
 
         <div>
-            <NavBar/>
+            <NavBar orderItemsLength = {orderItems.length}/>
             <div className="mt-6">
                 {productList}
             </div>
