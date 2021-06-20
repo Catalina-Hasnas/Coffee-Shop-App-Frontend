@@ -1,11 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import IProduct from '../../types/IProduct';
 import { IRootState } from '../../index';
 
 import ProductList from '../ProductList/ProductList';
 import { Link } from "react-router-dom";
-import { isPropertySignature } from "typescript";
 import { useThunkDispatch } from "../../store/hooks";
 import { getAllProducts } from "../../store/actions/Products";
 
@@ -15,12 +14,10 @@ const ReadProducts = (props: any): JSX.Element => {
     const dispatch = useThunkDispatch();
 
     const products = useSelector<IRootState, IProduct[]>(state => state.products.products); 
-    const product = useSelector<IRootState, IProduct>(state => state.products.product);
     
     useEffect(() => {
         dispatch(getAllProducts());
-        console.log(props.location.pathname);
-        console.log(product);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

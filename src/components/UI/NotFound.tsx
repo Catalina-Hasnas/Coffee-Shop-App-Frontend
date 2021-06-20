@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -15,12 +15,12 @@ const Loading = (props: any): JSX.Element => {
     }
 
     useEffect(() => {
-        console.log(props.location.pathname)
-        dispatch(fetchProductsFail({}));
+        dispatch(fetchProductsFail(null));
 
-        if (props.location.pathname != '/error/404') {
+        if (props.location.pathname !== '/error/404') {
             history.replace(location); 
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     

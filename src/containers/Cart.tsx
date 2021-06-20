@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IRootState } from '../index';
-import { useSelector, useDispatch } from "react-redux";
-import Loading from '../components/UI/Loading';
+import { useSelector } from "react-redux";
 import NavBar from '../components/Header/NavBar';
-import ICategory from '../types/ICategory';
 import IOrderItem from '../types/IOrderItem';
 import OrderItem from '../components/OrderItem/OrderItem';
 import { Link } from 'react-router-dom';
@@ -37,8 +35,6 @@ const Cart = (): JSX.Element => {
         const data = {
             "orderItems" : orderData
         }
-
-        console.log(orderData)
 
         axios.post( '/Orders', data )
             .then( response => {

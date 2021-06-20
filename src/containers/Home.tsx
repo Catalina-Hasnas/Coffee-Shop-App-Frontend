@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import IProduct from '../types/IProduct';
 import { getAllProducts } from '../store/actions/Products/index';
 import { IRootState } from '../index';
@@ -8,7 +8,6 @@ import NavBar from '../components/Header/NavBar';
 import ProductsList from '../components/ProductList/ProductList';
 import Loading from '../components/UI/Loading';
 import { useThunkDispatch } from '../store/hooks';
-import ICategory from '../types/ICategory';
 import { getAllCategories } from '../store/actions/Categories';
 import IOrderItem from '../types/IOrderItem';
 
@@ -23,7 +22,7 @@ const Home = (): JSX.Element => {
     useEffect(() => {
         dispatch(getAllProducts());
         dispatch(getAllCategories());
-        console.log(orderItems.length)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     let productList = loading ? null : <ProductsList products = {products}/>

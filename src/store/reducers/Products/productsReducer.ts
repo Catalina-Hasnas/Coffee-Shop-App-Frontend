@@ -37,9 +37,7 @@ export const productsReducer = (state: IProductsState = initialState, action: Ac
             return {...state, error: action.payload}
         }
         case ActionTypes.fetchProduct: {
-            console.log("from reducer")
-            console.log(action.payload)
-            return {... state, product: action.payload, loading: false}
+            return {...state, product: action.payload, loading: false}
         }
         default: 
             return state

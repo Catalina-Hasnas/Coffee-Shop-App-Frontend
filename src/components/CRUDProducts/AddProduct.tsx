@@ -1,24 +1,9 @@
-import axios from '../../services/api';
-import React, { Fragment, useState } from "react";
+import React from "react";
 import Form from './Form';
 import { FormTypes } from './formTypes';
 import { Link } from 'react-router-dom';
 
 const AddProduct = (): JSX.Element => {
-
-    interface product {
-        title: string,
-        amount: number,
-        price: number,
-        categoryId: number,
-        image: string
-    }
-
-    const [title, setTitle] = useState("");
-    const [image, setImage] = useState("");
-    const [amount, setAmount] = useState("");
-    const [price, setPrice] = useState("");
-    const [categoryId, setCategoryId] = useState("");
 
     return (
             <div className="min-h-screen flex justify-center items-center bg-gray-200 text-gray-800 relative">

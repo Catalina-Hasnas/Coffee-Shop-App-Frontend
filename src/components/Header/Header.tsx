@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { boolean } from 'yup/lib/locale';
 
 interface headerProps {
     notFound?: boolean

@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { ShoppingCartIcon, MenuIcon, XIcon, UserCircleIcon } from '@heroicons/react/solid';
+import { Menu, Transition } from '@headlessui/react';
+import { UserCircleIcon } from '@heroicons/react/solid';
 
-const profile = ['Backoffice','Your Profile', 'Your orders', 'Sign out'];
+const profile = ['backoffice','Your Profile', 'Your orders', 'Sign out'];
 
 const ProfileDropdown = (): JSX.Element => (
     <Fragment>
@@ -29,9 +29,9 @@ const ProfileDropdown = (): JSX.Element => (
                             static
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-sm shadow-lg py-1"
                         >
-                            {profile.map((item) => (
-                                <Menu.Item>
-                                    <Link to={`/${item}`}
+                            {profile.map((item, index) => (
+                                <Menu.Item key={index}>
+                                    <Link key={index} to={`/${item}`}
                                         className="bg-primaryLight block px-4 py-2 text-sm text-primary hover:text-secondary"
                                     >
                                         {item}

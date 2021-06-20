@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ActionTypes } from '../../store/actions/actionTypes';
 
@@ -19,7 +19,7 @@ const OrderItem = (props: IProductCardProps): JSX.Element => {
     const dispatch = useDispatch();
 
     const verifyStock = (quantity: number) => {
-        if (quantity <= props.stock || quantity == 0) {
+        if (quantity <= props.stock || quantity === 0) {
             setAmount(quantity)
         }   
     }
@@ -44,6 +44,7 @@ const OrderItem = (props: IProductCardProps): JSX.Element => {
                 unitPrice: props.unitPrice,
                 image: props.image,
                 title: props.title} 
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         })}, [amount]);
 
     return (
@@ -72,7 +73,7 @@ const OrderItem = (props: IProductCardProps): JSX.Element => {
                 </div>
             </div>
 
-            { amount == props.stock? 
+            { amount === props.stock? 
                 <p className="text-xs hidden md:block">There are only {props.stock} products left in stock.</p> : null }
             
             <div className="flex flex-col items-center md:flex-row md:justify-center w-1/5">

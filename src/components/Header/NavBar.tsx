@@ -1,13 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Disclosure } from '@headlessui/react';
 import { ShoppingCartIcon, MenuIcon, XIcon, UserCircleIcon } from '@heroicons/react/solid';
 import Logo from './Logo';
 import ProfileDropdown from './ProfileDropdown';
-import ICategory from '../../types/ICategory';
-import IOrderItem from '../../types/IOrderItem';
 
-const profile = ['Backoffice', 'Your Profile', 'Your orders', 'Sign out'];
+const profile = ['backoffice', 'Your Profile', 'Your orders', 'Sign out'];
 interface NavBarProps {
     orderItemsLength?: number
 }
@@ -97,8 +95,8 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                                     </Link>
                                 </div>
                                 <div className="mt-3 px-2 space-y-1">
-                                    {profile.map((item) => (
-                                        <Link to={`/${item}`}
+                                    {profile.map((item, index) => (
+                                        <Link key={index} to={`/${item}`}
                                             className="block px-3 py-2 rounded-md text-base font-medium text-primary"
                                         >
                                             {item}

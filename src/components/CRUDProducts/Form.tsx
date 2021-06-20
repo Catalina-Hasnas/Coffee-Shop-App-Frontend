@@ -38,8 +38,6 @@ interface promotion {
     promotionalText: string
 }
 
-
-
 const Form = (props: FormProps): JSX.Element => {
 
     const [promotions, setPromotions] = useState<promotion[]>([]);
@@ -52,7 +50,6 @@ const Form = (props: FormProps): JSX.Element => {
     const fetchPromotions = () => {
         axios.get('/promotions')
             .then(res => {
-                console.log(res);
 
                 var promotions: promotion[] = [];
 
@@ -82,7 +79,7 @@ const Form = (props: FormProps): JSX.Element => {
             .catch(error => {
                 console.log(error)
             });
-            console.log(routeChange());
+            routeChange();
     }
 
     const history = useHistory();
@@ -97,15 +94,17 @@ const Form = (props: FormProps): JSX.Element => {
 
     
 
-    const formType = props.type == FormTypes.create ? <h2 className="text-2xl font-bold leading-none mt-2"> Create Product </h2> : <h2 className="text-2xl font-bold leading-none mt-2"> Update Product </h2>
+    const formType = props.type === FormTypes.create ? ( <h2 className="text-2xl font-bold leading-none mt-2"> Create Product </h2> )  : ( <h2 className="text-2xl font-bold leading-none mt-2"> Update Product </h2> ) 
 
-    const promotionInfo =
+    const promotionInfo = (
         <Fragment>
             <label className="font-semibold" htmlFor="promotionId"></label>
             <Field className="border rounded outline-none p-1 bg-gray-100" as="select" id="promotionId" name="promotionId">
                 {promotions.map((promo) => (<option key={promo.id} value={promo.id}>{promo.promotionalText}</option>))}
             </Field>
         </Fragment>
+    );
+        
 
     let promotionId = 1;
     if (FormTypes.update && props.promotion?.id) {
@@ -123,12 +122,12 @@ const Form = (props: FormProps): JSX.Element => {
                 enableReinitialize
 
                 initialValues={{
-                    title: props.type == FormTypes.update ? props.title : "",
-                    amount: props.type == FormTypes.update ? props.amount : "",
-                    price: props.type == FormTypes.update ? props.price : "",
+                    title: props.type === FormTypes.update ? props.title : "",
+                    amount: props.type === FormTypes.update ? props.amount : "",
+                    price: props.type === FormTypes.update ? props.price : "",
                     categoryId: categoryId,
-                    image: props.type == FormTypes.update ? props.image : "",
-                    hasPromotion: (props.promotion == null) ? false : true,
+                    image: props.type === FormTypes.update ? props.image : "",
+                    hasPromotion: (props.promotion === null) ? false : true,
                     promotionId: promotionId
                 }}
 
@@ -155,8 +154,7 @@ const Form = (props: FormProps): JSX.Element => {
                 })}
 
                 onSubmit={async (values) => {
-                    console.log(values);
-                    if (props.type == FormTypes.update) {
+                    if (props.type === FormTypes.update) {
                         let updatedProduct: product = {
 
                             id: props.productId,
@@ -167,7 +165,6 @@ const Form = (props: FormProps): JSX.Element => {
                             image: values.image,
                             promotionId: values.hasPromotion ? values.promotionId : null
                         }
-                        console.log(updatedProduct);
 
                         axios.put("/products/" + props.productId, updatedProduct)
                             .then(response => {
@@ -177,7 +174,7 @@ const Form = (props: FormProps): JSX.Element => {
                             .catch(error => {
                                 console.log(error)
                             });
-                    } else if (props.type == FormTypes.create) {
+                    } else if (props.type === FormTypes.create) {
                         let newProduct: product = {
                             title: values.title,
                             amount: values.amount,
@@ -259,7 +256,7 @@ const Form = (props: FormProps): JSX.Element => {
 
             </Formik>
 
-            {props.type == FormTypes.update ?
+            {props.type === FormTypes.update ?
 
                 <div className="max-w-sm w-full rounded-sm shadow-md p-5 bg-white mt-2 flex justify-center items-center">
                     <button onClick={() => setOpen(true)} className="w-1/2 text-lg tracking-wide px-6 py-1 outline-none rounded-sm bg-red-700 text-white" type="submit">Delete product</button>

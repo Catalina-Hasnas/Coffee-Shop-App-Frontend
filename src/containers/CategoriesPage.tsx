@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProductById } from '../store/actions/Products/index';
 import { IRootState } from '../index';
 import { useThunkDispatch } from '../store/hooks';
-import { useSelector, useDispatch } from "react-redux";
-import IProduct from '../types/IProduct';
+import { useSelector } from "react-redux";
 import Loading from '../components/UI/Loading';
 import NavBar from '../components/Header/NavBar';
-import { productsReducer } from '../store/reducers/Products/productsReducer';
 import ICategory from '../types/ICategory';
 import { getCategoryById } from '../store/actions/Categories';
 import ProductsList from '../components/ProductList/ProductList';
@@ -28,6 +25,7 @@ const CategoriesPage = (): JSX.Element => {
 
     useEffect(() => {
         dispatch(getCategoryById(categoryId));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categoryId]);
 
     let productList = loading ? <Loading/> : <ProductsList products = {category.products}/>

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import IProduct from '../../types/IProduct';
 import ProductCard from './ProductCard';
 

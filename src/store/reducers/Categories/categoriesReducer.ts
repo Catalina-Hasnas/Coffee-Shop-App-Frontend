@@ -1,4 +1,3 @@
-import IProduct from '../../../types/IProduct';
 import ICategory from '../../../types/ICategory';
 
 
@@ -32,7 +31,7 @@ export const categoriesReducer = (state: ICategoriesState = initialState, action
             return {...state, error: action.payload}
         }
         case ActionTypes.fetchCategory: {
-            return {... state, category: action.payload, loading: false}
+            return {...state, category: action.payload, loading: false}
         }
         default: 
             return state

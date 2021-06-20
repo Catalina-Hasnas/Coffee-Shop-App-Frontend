@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getProductById } from '../../store/actions/Products/index';
 import { IRootState } from '../../index';
@@ -6,12 +6,9 @@ import { useThunkDispatch } from '../../store/hooks';
 import { useSelector, useDispatch } from "react-redux";
 import IProduct from '../../types/IProduct';
 import Loading from '../../components/UI/Loading';
-import axios from '../../services/api';
-import { productsReducer } from '../../store/reducers/Products/productsReducer';
 import Form from './Form';
 import { ActionTypes } from '../../store/actions/actionTypes';
 import { FormTypes } from './formTypes';
-import { useFormik } from 'formik';
 
 const UpdateProduct = (): JSX.Element => {
 
@@ -36,6 +33,7 @@ const UpdateProduct = (): JSX.Element => {
                 payload: []
             })
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     
@@ -52,7 +50,7 @@ const UpdateProduct = (): JSX.Element => {
                             </svg>
                         </button>
                     </Link>
-                    {product.id != 0? (
+                    {product.id !== 0? (
                         <Form 
                         productId = {product.id}
                         title = {product.title}

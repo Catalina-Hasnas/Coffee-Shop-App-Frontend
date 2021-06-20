@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import IProduct from '../../types/IProduct';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { ActionTypes } from '../../store/actions/actionTypes';
@@ -25,7 +24,7 @@ const dispatch = useDispatch()
 
 const linkTo = props.environment?.includes("/backoffice") ? (
     <Link to={`/backoffice/update/${props.id}`}>
-        <div className="my-3 p-3 border-t-2 border-b-2 border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
+        <div className="text-center my-3 p-3 border-t-2 border-b-2 border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
             Update Product           
         </div>
     </Link>
@@ -51,12 +50,12 @@ const linkTo = props.environment?.includes("/backoffice") ? (
 )
 
     return (
-        <Fragment>
+        <div>
             <Link to={`/products/${props.id}`}>
                 <div className="bg-bg rounded-sm border-secondary text-center w-60 overflow-hidden relative">
                 
                     <div className="w-60 h-full">
-                        <img src={props.image} />
+                        <img src={props.image} alt={props.title} />
                     </div>
                     {props.promotion? <div className="bg-secondary p-2 top-px left-32 rounded-md text-primaryLight text-xs my-2 absolute"> {props.promotion.promotionalText} </div> : <div></div>}
 
@@ -65,17 +64,17 @@ const linkTo = props.environment?.includes("/backoffice") ? (
                         {props.promotion? (
                             <Fragment>
                                 <span className="text-sm mr-1 text-gray-500"> {props.price} </span>
-                                <span className="rounded-md bg-secondary p-1 text-primaryLight tracking-wide text-lg">{props.price-props.promotion.discount} $</span>
+                                <span className="rounded-md bg-secondary p-1 text-primaryLight tracking-wide text-lg">{(props.price-props.promotion.discount).toFixed(2)} $</span>
                             </Fragment>
                         ) :
                             <span className="rounded-sm text-primary tracking-wide text-lg">{props.price} $</span>}
                     </div>
-
-                    {linkTo}
-
                 </div>
             </Link>
-        </Fragment>
+            
+            {linkTo}
+            
+        </div>
     )
 }
 

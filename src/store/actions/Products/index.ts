@@ -49,11 +49,8 @@ export const getProductById: ActionCreator<
     axios.get(`/products/${id}`)
         .then(res => {
             dispatch(fetchProduct(res.data));
-            console.log("from actions")
-            console.log(res.data)
         } )
         .catch( error => {
-            console.log(error.response.data)
             dispatch(fetchProductsFail(error.response.data))
         } );
     }
