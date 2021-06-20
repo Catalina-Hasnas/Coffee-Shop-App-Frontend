@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { IRootState } from '../index';
 import { useSelector } from "react-redux";
 import NavBar from '../components/Header/NavBar';
@@ -15,6 +15,7 @@ const Cart = (): JSX.Element => {
     const priceSum: number = orderItems.reduce(
         (accumulator, currentValue) => accumulator + currentValue.totalPrice, initialValue
     )
+    const cartRef = useRef<HTMLDivElement>(null);
     interface orderItem {
         productId: number,
         unitPrice: number,
@@ -45,10 +46,19 @@ const Cart = (): JSX.Element => {
             } );
     }
 
+    useEffect(() => {
+        if (cartRef.current) {
+            window.scrollTo({
+              behavior: "smooth",
+              top: cartRef.current.offsetTop
+            });
+          }
+    }, []);
+
     let navBar = orderItems ? <NavBar orderItemsLength = {orderItems.length} /> : <NavBar />
 
     return (
-        <div>
+        <div ref={cartRef}>
             {navBar}
             <div className="max-w-7xl mx-auto mt-10 bg-bg">
                 <div className="flex flex-wrap shadow-md my-10">
