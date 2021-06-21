@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { getProductById } from '../store/actions/Products/index';
 import { IRootState } from '../index';
@@ -10,6 +10,7 @@ import NavBar from '../components/Header/NavBar';
 import { ActionTypes } from '../store/actions/actionTypes';
 import { ShoppingCartIcon } from '@heroicons/react/solid';
 import IOrderItem from '../types/IOrderItem';
+import { Dialog, Transition } from '@headlessui/react'
 
 
 const ProductPage = (): JSX.Element => {
@@ -17,16 +18,19 @@ const ProductPage = (): JSX.Element => {
     const dispatchThunk = useThunkDispatch();
     const dispatch = useDispatch();
     const history = useHistory();
-    const product = useSelector<IRootState, IProduct>(state => state.products.product);  
-    const loading = useSelector<IRootState, boolean>(state => state.products.loading);  
+    const product = useSelector<IRootState, IProduct>(state => state.products.product);
+    const loading = useSelector<IRootState, boolean>(state => state.products.loading);
     const orderItems = useSelector<IRootState, IOrderItem[]>(state => state.cart.orderItems);
-    const fetchingError = useSelector<IRootState, any>(state => state.products.error);  
+    const fetchingError = useSelector<IRootState, any>(state => state.products.error);
     const [amount, setAmount] = useState(1);
+
+    const [open, setOpen] = useState(false);
+    const cancelButtonRef = useRef(null)
     interface ParamTypes {
         id: string
     }
 
-    let {id} = useParams<ParamTypes>();
+    let { id } = useParams<ParamTypes>();
     useEffect(() => {
         dispatchThunk(getProductById(id));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,71 +43,145 @@ const ProductPage = (): JSX.Element => {
         history.push(location);
     }
 
-    let navBar = orderItems ? <NavBar orderItemsLength = {orderItems.length} /> : <NavBar />
+    let navBar = orderItems ? <NavBar orderItemsLength={orderItems.length} /> : <NavBar />
 
     const disablePlusButton = () => amount >= product.amount ? true : false;
 
     const disableMinusButton = () => amount <= 1 ? true : false;
+
+    const handleAddToCart = () => {
+        dispatch({
+            type: ActionTypes.addToCart,
+            payload: {
+                id: product.id,
+                amount: amount > 0 ? amount : 1,
+                unitPrice: product.promotion != null ? product.price - product.promotion.discount : product.price,
+                totalPrice: (product.promotion != null ? product.price - product.promotion.discount : product.price) * amount,
+                image: product.image,
+                title: product.title,
+                stock: product.amount
+            }
+        })
+
+        setOpen(true);
+    }
+
     return (
 
         <Fragment>
             {navBar}
-            {!loading? (
-                <div className="max-w-7xl mx-auto mt-5">
-                    <div className="container mx-auto px-6">
-                        <div className="md:flex md:items-center">
-                            <div className="w-full h-64 md:w-1/2 lg:h-96">
-                                <img className="h-full w-full rounded-sm object-cover max-w-lg mx-auto" src={product.image} alt={product.title}/>
+            {!loading ? (
+                <div className="shadow-lg flex justify-center items-center max-w-xl mx-auto mt-5 bg-bg rounded-sm border border-secondary">
+                    <div className="flex flex-col justify-center items-center my-3">
+
+                        <div className="w-1/2 h-auto">
+                            <img className="rounded-sm object-cover mx-auto" src={product.image} alt={product.title} />
+                        </div>
+
+                        <div className="mx-auto flex flex-col items-center justify-center mt-5">
+                            <h3 className="uppercase text-primary font-bold text-2xl tracking-widest text-center">{product.title}</h3>
+                            <div className="flex items-center justify-center">
+                                { product.promotion? 
+                                    <span className="text-gray-500 line-through"> {product.price}$ </span> : null }
+                                
+                                <span className="text-xl p-5">{(product.promotion !== undefined && product.promotion !== null ? (product.price - product.promotion.discount).toFixed(2) : (product.price - 0).toFixed(2))}$</span>
                             </div>
+                            <div className=" flex flex-col items-center">
 
-                            <div className="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2 flex flex-col items-center">
-                                <h3 className="uppercase text-lg">{product.title}</h3>
-                                <span className="mt-3">{(product.promotion !== undefined && product.promotion !== null ? (product.price - product.promotion.discount).toFixed(2) : (product.price - 0).toFixed(2))}$</span>
-                                <hr className="my-3"/>
-                                <div className="mt-2 flex flex-col items-center">
-
-                                    <p className="my-2"> Quantity: {amount} </p>
-                                    { amount === product.amount? 
-                                    <p className="text-xs">There are only {product.amount} products left in stock.</p> : null }
-                                    <div className="flex mt-1">
-                                        <input type="button" value="+" disabled={disablePlusButton()} className="px-2 mr-3 bg-transparent border-secondary rounded-sm border" onClick={() => setAmount(amount + 1)}/>
-                                        <input type="button" value="-" disabled={disableMinusButton()} className="bg-transparent px-2 border-secondary rounded-sm border" onClick={() => setAmount(amount - 1)}/>
-                                    </div>
-
-                                    <div className="flex items-end mt-3">
-                                            <button onClick={() => dispatch({ 
-                                                    type: ActionTypes.addToCart, 
-                                                    payload: {
-                                                        id: product.id, 
-                                                        amount: amount > 0 ? amount : 1, 
-                                                        unitPrice: product.promotion != null? product.price - product.promotion.discount : product.price,
-                                                        totalPrice: (product.promotion != null? product.price - product.promotion.discount : product.price) * amount,
-                                                        image: product.image,
-                                                        title: product.title,
-                                                        stock: product.amount
-                                                    }})}
-                                                    className="mr-2 p-3 rounded-sm bg-secondary text-primaryLight tracking-wider">
-                                                Add to cart            
-                                            </button>
-
-                                            <Link to="/cart">
-                                            <button className="rounded-sm focus:outline-none focus:ring-1 focus:ring-secondary focus:ring-opacity-25">
-                                                <ShoppingCartIcon className="h-9 w-9 text-secondary" aria-hidden="true" />
-                                            </button>
-                                            </Link>
-                                        </div>
-                                    </div>
+                                <p className=""> Quantity: {amount} </p>
+                                {amount === product.amount ?
+                                    <p className="text-xs">There are only {product.amount} products left in stock.</p> : null}
+                                <div className="flex mt-1 p-2">
+                                    <input type="button" value="+" disabled={disablePlusButton()} className="px-2 mr-3 bg-transparent border-secondary rounded-sm border hover:bg-secondary hover:text-primaryLight transition ease-out duration-200" onClick={() => setAmount(amount + 1)} />
+                                    <input type="button" value="-" disabled={disableMinusButton()} className="bg-transparent px-2 border-secondary rounded-sm border hover:bg-secondary hover:text-primaryLight transition ease-out duration-200" onClick={() => setAmount(amount - 1)} />
                                 </div>
+
+                                <div className="flex items-end mt-3">
+                                    <button onClick={() => handleAddToCart()}
+                                        className="mr-2 p-3 rounded-sm bg-secondary text-primaryLight tracking-wider">
+                                        Add to cart
+                                    </button>
+
+
+                                </div>
+                                <Transition.Root show={open} as={Fragment}>
+                                    <Dialog
+                                        as="div"
+                                        static
+                                        className="fixed z-10 inset-0 overflow-y-auto"
+                                        initialFocus={cancelButtonRef}
+                                        open={open}
+                                        onClose={setOpen}
+                                    >
+                                        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                            <Transition.Child
+                                                as={Fragment}
+                                                enter="ease-out duration-300"
+                                                enterFrom="opacity-0"
+                                                enterTo="opacity-100"
+                                                leave="ease-in duration-200"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                            </Transition.Child>
+
+                                            {/* This element is to trick the browser into centering the modal contents. */}
+                                            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                                                &#8203;
+                                            </span>
+                                            <Transition.Child
+                                                as={Fragment}
+                                                enter="ease-out duration-300"
+                                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                                leave="ease-in duration-200"
+                                                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                            >
+                                                <div className="inline-block align-bottom bg-white rounded-lg  overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                        <div className="flex justify-center">
+                                                            <div className="mt-3 sm:mt-0">
+                                                                <Dialog.Title as="h2" className="text-lg leading-6 font-medium text-green-700">
+                                                                    Product added to cart!
+                                                                </Dialog.Title>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="bg-gray-50 px-4 py-3 flex justify-around">
+                                                        <Link to="/cart">
+                                                            <button style={{animationIterationCount: 1}} className="animate-bounce flex justify-between p-2 items-center border border-secondary rounded-sm">
+                                                                See your shopping cart
+                                                                <ShoppingCartIcon className="h-9 w-9 text-secondary" aria-hidden="true" />
+                                                            </button>
+                                                        </Link>
+                                                        <button
+                                                            type="button"
+                                                            className="flex justify-between p-2 items-center border border-secondary rounded-sm hover:bg-secondary hover:text-primaryLight transition ease-out duration-200"
+                                                            onClick={() => setOpen(false)}
+                                                            ref={cancelButtonRef}
+                                                        >
+                                                            Back to product
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </Transition.Child>
+                                        </div>
+                                    </Dialog>
+                                </Transition.Root>
+
                             </div>
                         </div>
                     </div>
-                
-            ) : <Loading/>}
-            
-            
+                </div>
+
+            ) : <Loading />}
+
+
         </Fragment>
     )
-    
+
 }
 
 export default ProductPage;

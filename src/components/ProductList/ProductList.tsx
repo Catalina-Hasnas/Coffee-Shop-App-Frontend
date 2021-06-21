@@ -10,7 +10,7 @@ interface IProductListProps {
 const ProductList = (props:IProductListProps): JSX.Element => {
 
     return (
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-8 pb-5">
             <div className="grid justify-items-center gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                 
                 {props.products.map((product) => {
