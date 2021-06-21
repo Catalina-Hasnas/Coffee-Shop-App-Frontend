@@ -61,16 +61,19 @@ const OrderItem = (props: IProductCardProps): JSX.Element => {
                 </div>
             </div>
 
-            { amount === props.stock? <p className="text-xs hidden md:block w-1/6">There are only {props.stock} products left in stock.</p> : null }
             
-            <div className="flex flex-col items-center md:flex-row md:justify-center w-1/6">
+            
+            <div className="flex flex-col items-center  w-1/6">
 
-                <input type="button" value="+" className="px-2 bg-transparent border-secondary rounded-sm border" disabled={disableButton()} onClick={() => setAmount(amount + 1)}/>
+                { amount === props.stock? <p className="text-xs hidden md:block text-center mb-2">There are only {props.stock} products left in stock.</p> : null }
+
+                <div className="flex items-center">
+                <input type="button" value="+" className="px-2 bg-transparent border-secondary rounded-sm border hover:bg-secondary hover:text-primaryLight transition ease-out duration-200" disabled={disableButton()} onClick={() => setAmount(amount + 1)}/>
                     
                 <input className="mx-2 my-2 md:my-0 border text-center w-8" type="text" value={amount > props.stock ? props.stock : amount} onChange={e => verifyStock(parseInt(e.target.value))} />
 
-                <input type="button" value="-" className="px-2 bg-transparent border-secondary rounded-sm border" onClick={() => setAmount(amount - 1)}/>
-                
+                <input type="button" value="-" className="px-2 bg-transparent border-secondary rounded-sm border hover:bg-secondary hover:text-primaryLight transition ease-out duration-200" onClick={() => setAmount(amount - 1)}/>
+                </div>
             </div>
 
             <span className="text-center w-1/6 font-semibold text-sm">{toFixed(props.unitPrice)}$</span>

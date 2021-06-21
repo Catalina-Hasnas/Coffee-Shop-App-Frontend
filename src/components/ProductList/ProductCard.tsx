@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { ActionTypes } from '../../store/actions/actionTypes';
@@ -58,11 +58,11 @@ const ProductCard = (props: IProductCardProps): JSX.Element => {
                 {props.promotion? <div className="bg-secondary p-2 top-px left-32 rounded-md text-primaryLight text-xs my-2 absolute"> {props.promotion.promotionalText} </div> : null }
 
                 <div className="px-1 text-center border-t border-secondary h-20 flex flex-col justify-center">
-                    <span className="font-bold text-l whitespace-nowrap overflow-ellipsis overflow-hidden">{props.title}</span>
+                    <span className="font-bold text-l whitespace-nowrap overflow-ellipsis overflow-hidden tracking-wider p-1">{props.title}</span>
                     
                     {props.promotion ? (
                         <div className="flex justify-center my-2 items-center ">
-                            <span className="mr-1 text-sm text-gray-500"> {props.price} </span>
+                            <span className="mr-1 text-sm text-gray-500 line-through"> {props.price}$</span>
                             <span className="rounded-md bg-secondary p-1 text-primaryLight tracking-wide text-lg ">{(props.price - props.promotion.discount).toFixed(2)} $</span>
                         </div>
                     ) : <div className="flex justify-center items-center mt-3">
