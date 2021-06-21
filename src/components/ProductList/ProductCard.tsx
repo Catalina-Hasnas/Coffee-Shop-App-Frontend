@@ -24,7 +24,7 @@ const ProductCard = (props: IProductCardProps): JSX.Element => {
 
     const linkTo = props.environment?.includes("/backoffice") ? (
         <Link to={`/backoffice/update/${props.id}`}>
-            <div className="text-center my-3 p-3 border-t border-b border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
+            <div className="font-bold text-center p-3 border-t border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
                 Update Product
             </div>
         </Link>
@@ -44,28 +44,30 @@ const ProductCard = (props: IProductCardProps): JSX.Element => {
                     stock: props.stock
                 }
             })}
-                className="font-bold text-center p-3 border-t border-b border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
+                className="font-bold text-center p-3 border-t border-secondary bg-transparent text-primary tracking-widest hover:bg-secondary hover:text-primaryLight transition ease-out duration-200">
                 Add to cart
             </div>
         </Link>
     )
 
     return (
-        <div className="relative w-64 rounded overflow-hidden shadow-lg border-l border-r border-t border-secondary">
+        <div className="relative flex flex-col w-64 justify-evenly rounded overflow-hidden shadow-lg border-l border-r border-t border-b border-secondary h-96">
             <Link to={`/products/${props.id}`}>
-                <img className="w-full h-72" src={props.image} alt={props.title} />
+                <img className="w-full h-60" src={props.image} alt={props.title} />
 
-                {props.promotion? <div className="bg-secondary p-2 top-px left-32 rounded-md text-primaryLight text-xs my-2 absolute"> {props.promotion.promotionalText} </div> : <div></div> }
+                {props.promotion? <div className="bg-secondary p-2 top-px left-32 rounded-md text-primaryLight text-xs my-2 absolute"> {props.promotion.promotionalText} </div> : null }
 
-                <div className="px-6 py-4 text-center border-t border-secondary">
-                    <div className="font-bold text-xl mb-2">{props.title}</div>
+                <div className="px-1 text-center border-t border-secondary h-20 flex flex-col justify-center">
+                    <span className="font-bold text-l whitespace-nowrap overflow-ellipsis overflow-hidden">{props.title}</span>
                     
                     {props.promotion ? (
-                        <Fragment>
-                            <span className="text-sm mr-1 text-gray-500"> {props.price} </span>
+                        <div className="flex justify-center my-2 items-center ">
+                            <span className="mr-1 text-sm text-gray-500"> {props.price} </span>
                             <span className="rounded-md bg-secondary p-1 text-primaryLight tracking-wide text-lg ">{(props.price - props.promotion.discount).toFixed(2)} $</span>
-                        </Fragment>
-                    ) : <span className="rounded-sm text-primary tracking-wide text-lg">{props.price} $</span>}
+                        </div>
+                    ) : <div className="flex justify-center items-center mt-3">
+                            <span className="rounded-sm text-primary tracking-wide text-lg"> {props.price} $</span>
+                        </div> }
                 </div>
                 
             </Link>
